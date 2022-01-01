@@ -1,48 +1,91 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Select from "react-select";
 
-import { years } from "../config";
+import { SelctionsContext } from "../pages/index";
 
-const options = years.map((year) => ({
-  value: year,
-  label: year.toString(),
-}));
+const LapChart = () => {
+  const {
+    year,
+    years,
+    setYear,
+    gp,
+    gps,
+    setGp,
+    session,
+    sessions,
+    setSession,
+    driver,
+    drivers,
+    setDriver,
+  } = useContext(SelctionsContext);
 
-const LapChart = ({ gp, session, drivers }) => {
-  const [year, setYear] = useState(2018);
-  const handleChange = (year) => {
-    setYear(year);
-  };
+  //********* options for different dropdown *********/
+  const yearOptions = years
+    ? years.map((year) => ({
+        value: year,
+        label: year.toString(),
+      }))
+    : [{ value: null, label: "please wait..." }];
+
+  const gpOptions = gps
+    ? gps.map((gp) => ({
+        value: gp,
+        label: gp,
+      }))
+    : [{ value: null, label: "select year first..." }];
+
+  const sessionOptions = sessions
+    ? sessions.map((session) => ({
+        value: session,
+        label: session,
+      }))
+    : [{ value: null, label: "select GP first..." }];
+
+  const driverOptions = drivers
+    ? drivers.map((driver) => ({
+        value: driver,
+        label: driver,
+      }))
+    : [{ value: null, label: "select session first..." }];
+
   return (
     <div>
       <Select
-        instanceId={year}
+        instanceId="year"
         value={year}
-        onChange={handleChange}
-        options={options}
+        onChange={(year) => {
+          setYear(year);
+        }}
+        options={yearOptions}
         placeholder="year..."
       />
-      {/* <Select
-        instanceId={gp}
+      <Select
+        instanceId="gp"
         value={gp}
-        onChange={handleChange}
-        options={options}
+        onChange={(gp) => {
+          setGp(gp);
+        }}
+        options={gpOptions}
         placeholder="gp..."
       />
       <Select
-        instanceId={Session}
-        value={Session}
-        onChange={handleChange}
-        options={options}
+        instanceId="session"
+        value={session}
+        onChange={(session) => {
+          setSession(session);
+        }}
+        options={sessionOptions}
         placeholder="Session..."
       />
       <Select
-        instanceId={Drivers}
-        value={Drivers}
-        onChange={handleChange}
-        options={options}
+        instanceId="driver"
+        value={driver}
+        onChange={(driver) => {
+          setDriver(driver);
+        }}
+        options={driverOptions}
         placeholder="Drivers..."
-      /> */}
+      />
     </div>
   );
 };

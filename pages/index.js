@@ -1,19 +1,94 @@
-import React, { useState, createContext } from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
 import Head from "next/head";
 import LapChart from "../components/lap-chart.component";
 
 import { server, years } from "../config";
 
-// const SelctionsContext = createContext({
+export const SelctionsContext = createContext({
+  year: "",
+  gp: "",
+  session: "",
+  driver: "",
+  setYear: () => {},
+  setGp: () => {},
+  setSession: () => {},
+  setDriver: () => {},
+  years: [],
+  gps: [],
+  sessions: [],
+  drivers: [],
+});
 
-// })
-
-
-export default function Home({ gp }) {
-  const [year, setYear] = useState(2018);
-  const handleChange = (year) => {
-    setYear(year);
+export default function Home() {
+  const [year, setYear] = useState();
+  const [round, setRound] = useState();
+  const [gp, setGp] = useState();
+  const [gps, setGps] = useState();
+  const [session, setSession] = useState();
+  const [sessions, setSessions] = useState();
+  const [driver, setDriver] = useState();
+  const [drivers, setDrivers] = useState();
+  const value = {
+    year,
+    years,
+    setYear,
+    gp,
+    gps,
+    setGp,
+    session,
+    sessions,
+    setSession,
+    driver,
+    drivers,
+    setDriver,
   };
+
+  useEffect(() => {
+    const getData = async (year) => {
+      const res = await fetch(`https://ergast.com/api/f1/${year}.json`);
+      const json = await res.json();
+      let gps = [];
+      json.MRData.RaceTable.Races.forEach((race) => gps.push(race.raceName));
+      setGps(gps);
+    };
+
+    if (year !== undefined && year !== null) {
+      getData(year.value);
+    }
+  }, [year]);
+
+  useEffect(() => {
+    const getData = async (gp, year) => {
+      const res = await fetch(`${server}/api/year/${year}/weekend/${gp}`);
+      const json = await res.json();
+      const round = json.round;
+      const sessions = json.weekend_sessions;
+      setRound(round);
+      setSessions(sessions);
+    };
+
+    if (gp !== undefined && gp !== null) {
+      getData(gp.value, year.value);
+    }
+  }, [gp, year]);
+
+  useEffect(() => {
+    const getData = async (round, year) => {
+      const res = await fetch(
+        `https://ergast.com/api/f1/${year}/${round}/drivers.json`
+      );
+      const json = await res.json();
+      let drivers = [];
+      json.MRData.DriverTable.Drivers.forEach((driver) => {
+        drivers.push(driver.code);
+      });
+      setDrivers(drivers);
+    };
+
+    if (session !== undefined && session !== null) {
+      getData(round, year.value);
+    }
+  }, [session, gp, round, year]);
 
   return (
     <div className="">
@@ -24,22 +99,26 @@ export default function Home({ gp }) {
       </Head>
 
       <main className="">
-        <LapChart years={years} gp={gp} />
+        <SelctionsContext.Provider value={value}>
+          <LapChart />
+        </SelctionsContext.Provider>
       </main>
     </div>
   );
 }
 
-export async function getServerSideProps(context) {
-  const gp_res = await fetch(`https://ergast.com/api/f1/2020.json`);
-  const gp_json = await gp_res.json();
-  const gp = gp_json.MRData.RaceTable.Races.map((race) => ({
-    race: race.Circuit.circuitName,
-  }));
+// export async function getServerSideProps(context) {
+//   const gp_res = await fetch(`https://ergast.com/api/f1/${year}.json`);
+//   const gp_json = await gp_res.json();
+//   const gps = gp_json.MRData.RaceTable.Races.map((race) => ({
+//     race: race.raceName,
+//   }));
 
-  return {
-    props: {
-      gp,
-    },
-  };
-}
+//   return {
+//     props: {
+//       gps,
+//     },
+//   };
+// }
+
+// http://ergast.com/api/f1/{{year}}/{{round}}/drivers
