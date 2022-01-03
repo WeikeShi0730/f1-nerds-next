@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import Head from "next/head";
 import LapChart from "../components/lap-chart.component";
+import Telemetry from "../components/telemetry.component";
 
 import { server, years } from "../config";
 
@@ -63,6 +64,7 @@ export default function Home() {
       const json = await res.json();
       const round = json.round;
       const sessions = json.weekend_sessions;
+      console.log(sessions)
       setRound(round);
       setSessions(sessions);
     };
@@ -101,6 +103,7 @@ export default function Home() {
       <main className="">
         <SelctionsContext.Provider value={value}>
           <LapChart />
+          <Telemetry />
         </SelctionsContext.Provider>
       </main>
     </div>

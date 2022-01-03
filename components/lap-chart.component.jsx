@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import Select from "react-select";
-
 import { SelctionsContext } from "../pages/index";
 
 const LapChart = () => {
@@ -35,10 +34,14 @@ const LapChart = () => {
     : [{ value: null, label: "select year first..." }];
 
   const sessionOptions = sessions
-    ? sessions.map((session) => ({
-        value: session,
-        label: session,
-      }))
+    ? sessions.map((session) => {
+        for (const [key, value] of Object.entries(session)) {
+          return {
+            value: key,
+            label: value,
+          };
+        }
+      })
     : [{ value: null, label: "select GP first..." }];
 
   const driverOptions = drivers
