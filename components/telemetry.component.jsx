@@ -4,7 +4,7 @@ import { SelctionsContext } from "../pages/index";
 import { server } from "../config";
 
 const Telemetry = () => {
-  const [lap, setLap]  = useState(4)
+  const [lap, setLap]  = useState()
   const { year, gp, session, driver } = useContext(SelctionsContext);
   const [telemetryData, setTelemetryData] = useState(null);
 

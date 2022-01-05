@@ -29,6 +29,7 @@ export default function Home() {
   const [sessions, setSessions] = useState();
   const [driver, setDriver] = useState();
   const [drivers, setDrivers] = useState();
+  const [sessionData, setSessionData] = useState();
   const value = {
     year,
     years,
@@ -64,7 +65,6 @@ export default function Home() {
       const json = await res.json();
       const round = json.round;
       const sessions = json.weekend_sessions;
-      console.log(sessions)
       setRound(round);
       setSessions(sessions);
     };
@@ -92,6 +92,22 @@ export default function Home() {
     }
   }, [session, gp, round, year]);
 
+  useEffect(() => {
+    const getData = async (year, gp, session, driver) => {
+      const res = await fetch(
+        `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${driver}`
+      );
+      const json = await res.json();
+      const sessionData = json;
+      console.log(sessionData);
+      setSessionData(sessionData);
+    };
+
+    if (driver !== undefined && driver !== null) {
+      getData(year.value, gp.value, session.value, driver.value);
+    }
+  }, [session, gp, year, driver]);
+
   return (
     <div className="">
       <Head>
@@ -102,7 +118,7 @@ export default function Home() {
 
       <main className="">
         <SelctionsContext.Provider value={value}>
-          <LapChart />
+          <LapChart sessionData={sessionData} />
           <Telemetry />
         </SelctionsContext.Provider>
       </main>

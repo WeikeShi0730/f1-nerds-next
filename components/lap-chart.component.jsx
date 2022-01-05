@@ -1,8 +1,12 @@
 import React, { useContext } from "react";
+import dynamic from "next/dynamic";
 import Select from "react-select";
 import { SelctionsContext } from "../pages/index";
 
-const LapChart = () => {
+// import Graph from "./graph.component";
+const Graph = dynamic(() => import("./graph.component"), { ssr: false });
+
+const LapChart = ({ sessionData }) => {
   const {
     year,
     years,
@@ -52,44 +56,47 @@ const LapChart = () => {
     : [{ value: null, label: "select session first..." }];
 
   return (
-    <div>
-      <Select
-        instanceId="year"
-        value={year}
-        onChange={(year) => {
-          setYear(year);
-        }}
-        options={yearOptions}
-        placeholder="year..."
-      />
-      <Select
-        instanceId="gp"
-        value={gp}
-        onChange={(gp) => {
-          setGp(gp);
-        }}
-        options={gpOptions}
-        placeholder="gp..."
-      />
-      <Select
-        instanceId="session"
-        value={session}
-        onChange={(session) => {
-          setSession(session);
-        }}
-        options={sessionOptions}
-        placeholder="Session..."
-      />
-      <Select
-        instanceId="driver"
-        value={driver}
-        onChange={(driver) => {
-          setDriver(driver);
-        }}
-        options={driverOptions}
-        placeholder="Drivers..."
-      />
-    </div>
+    <>
+      <div>
+        <Select
+          instanceId="year"
+          value={year}
+          onChange={(year) => {
+            setYear(year);
+          }}
+          options={yearOptions}
+          placeholder="year..."
+        />
+        <Select
+          instanceId="gp"
+          value={gp}
+          onChange={(gp) => {
+            setGp(gp);
+          }}
+          options={gpOptions}
+          placeholder="gp..."
+        />
+        <Select
+          instanceId="session"
+          value={session}
+          onChange={(session) => {
+            setSession(session);
+          }}
+          options={sessionOptions}
+          placeholder="Session..."
+        />
+        <Select
+          instanceId="driver"
+          value={driver}
+          onChange={(driver) => {
+            setDriver(driver);
+          }}
+          options={driverOptions}
+          placeholder="Drivers..."
+        />
+      </div>
+      <Graph sessionData={sessionData} />
+    </>
   );
 };
 
