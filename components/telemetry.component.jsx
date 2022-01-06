@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
+import dynamic from "next/dynamic";
 import { SelctionsContext } from "../pages/index";
-
 import { server } from "../config";
+const TelemetryGraph = dynamic(() => import("./telemetry-graph.component"), {
+  ssr: false,
+});
 
 const Telemetry = () => {
-  const [lap, setLap]  = useState()
-  const { year, gp, session, driver } = useContext(SelctionsContext);
+  const { year, gp, session, driver, lap } = useContext(SelctionsContext);
   const [telemetryData, setTelemetryData] = useState(null);
 
   const condition =
@@ -33,7 +35,6 @@ const Telemetry = () => {
       const json = await res.json();
       const telemetry = json;
       if (typeof telemetry === "object") {
-        console.log("clear", telemetry);
         setTelemetryData(telemetry);
         clearInterval(interval);
       }
@@ -42,7 +43,11 @@ const Telemetry = () => {
     return () => clearInterval(interval);
   }, [year, gp, session, driver, lap, condition]);
 
-  return <div></div>;
+  return (
+    <div>
+      <TelemetryGraph telemetryData={telemetryData} />
+    </div>
+  );
 };
 
 export default Telemetry;

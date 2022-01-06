@@ -9,8 +9,14 @@ import {
 } from "recharts";
 import { SelctionsContext } from "../pages/index";
 
-const Graph = ({ sessionData }) => {
-  function msToTime(s) {
+const LapChartGraph = ({ sessionData }) => {
+  const { setLap } = useContext(SelctionsContext);
+  const [data, setData] = useState();
+  const handleClick = (_, activeIndex) => {
+    setLap(activeIndex.index + 1);
+  };
+
+  const msToTime = (s) => {
     var ms = s % 1000;
     s = (s - ms) / 1000;
     var secs = s % 60;
@@ -18,9 +24,7 @@ const Graph = ({ sessionData }) => {
     var mins = s % 60;
 
     return mins + ":" + secs + "." + ms;
-  }
-
-  const [data, setData] = useState();
+  };
 
   useEffect(() => {
     if (sessionData) {
@@ -64,18 +68,18 @@ const Graph = ({ sessionData }) => {
       <LineChart width={1000} height={400} data={data ? data : []}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="lapNumber" />
-        <YAxis dataKey="lapTime" />
+        <YAxis />
         <Tooltip content={<CustomTooltip />} />
         <Line
           connectNulls
           type="monotone"
           dataKey="lapTimeMilli"
           stroke="#8884d8"
-          activeDot={{ r: 8 }}
+          activeDot={({ r: 8 }, { onClick: handleClick })}
         />
       </LineChart>
     </div>
   );
 };
 
-export default Graph;
+export default LapChartGraph;
