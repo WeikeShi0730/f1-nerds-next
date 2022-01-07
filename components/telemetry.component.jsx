@@ -45,6 +45,11 @@ const Telemetry = () => {
 
   return (
     <div>
+      <div>
+        <p className="text-center">
+        {condition ? `${year.value} - ${gp.value} - ${session.value} - ${driver.value} - ${lap}` : "Select a lap to display telemetry data"}
+        </p>
+      </div>
       <TelemetryGraph telemetryData={telemetryData} />
     </div>
   );

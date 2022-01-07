@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
   LineChart,
+  Label,
   XAxis,
   YAxis,
   Line,
@@ -67,8 +68,20 @@ const LapChartGraph = ({ sessionData }) => {
     <div>
       <LineChart width={1000} height={400} data={data ? data : []}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="lapNumber" />
-        <YAxis />
+        <XAxis dataKey="lapNumber">
+          <Label
+            value="Time"
+            offset={0}
+            position="insideBottom"
+          />
+        </XAxis>
+        <YAxis
+          label={{
+            value: "Time",
+            angle: -90,
+            position: "insideLeft",
+          }}
+        />
         <Tooltip content={<CustomTooltip />} />
         <Line
           connectNulls
