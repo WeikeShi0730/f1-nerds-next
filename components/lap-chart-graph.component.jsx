@@ -33,56 +33,32 @@ const LapChartGraph = ({ sessionData }) => {
       const temp = keys.map((key) => ({
         lapNumber: sessionData.LapNumber[key],
         lapTimeMilli: sessionData.LapTime[key],
-        lapTime: msToTime(sessionData.LapTime[key]),
         compound: sessionData.Compound[key],
       }));
       setData(temp);
     }
   }, [sessionData]);
 
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="custom-tooltip">
-          <p className="label">Lap: {`${label}`}</p>
-          <p className="desc">Lap Time: {`${payload[0].payload.lapTime}`}</p>
-        </div>
-      );
-    }
-    return null;
-  };
-
-  const CustomYAxis = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="custom-tooltip">
-          <p className="label">Lap: {`${label}`}</p>
-          <p className="desc">Lap Time: {`${payload[0].value}`}</p>
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
     <div>
       <LineChart width={1000} height={400} data={data ? data : []}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="lapNumber">
-          <Label
-            value="Time"
-            offset={0}
-            position="insideBottom"
-          />
+          <Label value="Time" offset={0} position="insideBottom" />
         </XAxis>
         <YAxis
+          tickFormatter={(lapTimeMilli) => msToTime(lapTimeMilli)}
           label={{
             value: "Time",
             angle: -90,
             position: "insideLeft",
           }}
         />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip
+          label="hello"
+          formatter={(value, _) => [msToTime(value), "Lap Time"]}
+          labelFormatter={(value) => "Lap " + value}
+        />
         <Line
           connectNulls
           type="monotone"
