@@ -44,13 +44,12 @@ const Telemetry = () => {
   }, [year, gp, session, driver, lap, condition]);
 
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center m-8">
       <div>
-        <p className="text-center">
         {condition ? `${year.value} - ${gp.value} - ${session.value} - ${driver.value} - ${lap}` : "Select a lap to display telemetry data"}
-        </p>
       </div>
-      <TelemetryGraph telemetryData={telemetryData} />
+      <div>
+      <TelemetryGraph telemetryData={telemetryData} /></div>
     </div>
   );
 };

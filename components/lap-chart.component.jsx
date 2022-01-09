@@ -8,16 +8,8 @@ const LapChartGraph = dynamic(() => import("./lap-chart-graph.component"), {
 import { server, years } from "../config";
 
 const LapChart = () => {
-  const {
-    year,
-    gp,
-    session,
-    driver,
-    setYear,
-    setGp,
-    setSession,
-    setDriver,
-  } = useContext(SelctionsContext);
+  const { year, gp, session, driver, setYear, setGp, setSession, setDriver } =
+    useContext(SelctionsContext);
 
   //********* states for fetched data *********/
   const [round, setRound] = useState();
@@ -79,6 +71,7 @@ const LapChart = () => {
       const res = await fetch(
         `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${driver}`
       );
+
       const json = await res.json();
       const sessionData = json;
       setSessionData(sessionData);
@@ -124,7 +117,7 @@ const LapChart = () => {
 
   return (
     <>
-      <div>
+      <div className="flex m-8 justify-center space-x-5">
         <Select
           instanceId="year"
           value={year}

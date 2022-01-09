@@ -40,7 +40,7 @@ const LapChartGraph = ({ sessionData }) => {
   }, [sessionData]);
 
   return (
-    <div>
+    <div className="flex justify-center m-8">
       <LineChart width={1000} height={400} data={data ? data : []}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="lapNumber">
