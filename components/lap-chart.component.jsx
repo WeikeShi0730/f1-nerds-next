@@ -6,6 +6,7 @@ const LapChartGraph = dynamic(() => import("./lap-chart-graph.component"), {
   ssr: false,
 });
 import { server, years } from "../config";
+import Spinner from "./spinner.component";
 
 const LapChart = () => {
   const { year, gp, session, driver, setYear, setGp, setSession, setDriver } =
@@ -18,6 +19,12 @@ const LapChart = () => {
   const [drivers, setDrivers] = useState();
   const [sessionData, setSessionData] = useState();
 
+  //********* states for loading *********/
+  const [gpsLoading, setGpsLoading] = useState(false);
+  const [sessionsLoading, setSessionsLoading] = useState(false);
+  const [driversLoading, setDriversLoading] = useState(false);
+  const [sessionDataLoading, setSessionDataLoading] = useState(false);
+
   //********* api calls *********/
   useEffect(() => {
     const getData = async (year) => {
@@ -26,9 +33,11 @@ const LapChart = () => {
       let gps = [];
       json.MRData.RaceTable.Races.forEach((race) => gps.push(race.raceName));
       setGps(gps);
+      setGpsLoading(false);
     };
 
     if (year !== undefined && year !== null) {
+      setGpsLoading(true);
       getData(year.value);
     }
   }, [year]);
@@ -41,9 +50,11 @@ const LapChart = () => {
       const sessions = json.weekend_sessions;
       setRound(round);
       setSessions(sessions);
+      setSessionsLoading(false);
     };
 
     if (gp !== undefined && gp !== null) {
+      setSessionsLoading(true);
       getData(gp.value, year.value);
     }
   }, [gp, year]);
@@ -59,9 +70,11 @@ const LapChart = () => {
         drivers.push(driver.code);
       });
       setDrivers(drivers);
+      setDriversLoading(false);
     };
 
     if (session !== undefined && session !== null) {
+      setDriversLoading(true);
       getData(round, year.value);
     }
   }, [session, gp, round, year]);
@@ -71,13 +84,15 @@ const LapChart = () => {
       const res = await fetch(
         `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${driver}`
       );
-
       const json = await res.json();
+
       const sessionData = json;
       setSessionData(sessionData);
+      setSessionDataLoading(false);
     };
 
     if (driver !== undefined && driver !== null) {
+      setSessionDataLoading(true);
       getData(year.value, gp.value, session.value, driver.value);
     }
   }, [session, gp, year, driver]);
@@ -140,6 +155,7 @@ const LapChart = () => {
 
   return (
     <>
+      <div className="">{sessionDataLoading ? <Spinner /> : null}</div>
       <div className="flex mx-8 my-10 justify-center space-x-5">
         <Select
           instanceId="year"
@@ -160,6 +176,7 @@ const LapChart = () => {
             setGp(gp);
           }}
           options={gpOptions}
+          isLoading={gpsLoading}
           placeholder="gp..."
           className="w-64"
           styles={customStyles}
@@ -172,6 +189,7 @@ const LapChart = () => {
             setSession(session);
           }}
           options={sessionOptions}
+          isLoading={sessionsLoading}
           placeholder="Session..."
           className="w-36"
           styles={customStyles}
@@ -184,12 +202,14 @@ const LapChart = () => {
             setDriver(driver);
           }}
           options={driverOptions}
+          isLoading={driversLoading}
           placeholder="Drivers..."
           className="w-64"
           styles={customStyles}
           theme={theme}
         />
       </div>
+
       <div className="container bg-opacity-40 bg-white px-5 py-10 mx-auto my-0 rounded-3xl shadow-xl">
         <div className="flex flex-col justify-center items-center">
           <LapChartGraph sessionData={sessionData} />

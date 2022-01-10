@@ -5,10 +5,12 @@ import { server } from "../config";
 const TelemetryGraph = dynamic(() => import("./telemetry-graph.component"), {
   ssr: false,
 });
+import Spinner from "./spinner.component";
 
 const Telemetry = () => {
   const { year, gp, session, driver, lap } = useContext(SelctionsContext);
   const [telemetryData, setTelemetryData] = useState(null);
+  const [telemetryDataLoading, setTelemetryDataLoading] = useState(false);
 
   const condition =
     year !== undefined &&
@@ -25,6 +27,7 @@ const Telemetry = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (condition) {
+        setTelemetryDataLoading(true);
         getData(year.value, gp.value, session.value, driver.value, lap);
       }
     }, 1000);
@@ -36,6 +39,7 @@ const Telemetry = () => {
       const telemetry = json;
       if (typeof telemetry === "object") {
         setTelemetryData(telemetry);
+        setTelemetryDataLoading(false);
         clearInterval(interval);
       }
       return telemetry;
@@ -45,6 +49,7 @@ const Telemetry = () => {
 
   return (
     <div className="flex flex-col justify-center items-center m-8">
+      {telemetryDataLoading ? <Spinner /> : null}
       <div className="">
         {condition
           ? `${year.value} - ${gp.value} - ${session.value} - ${driver.value} - ${lap}`
@@ -56,9 +61,7 @@ const Telemetry = () => {
             <TelemetryGraph telemetryData={telemetryData} />
           </div>
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
     </div>
   );
 };
