@@ -40,11 +40,11 @@ const LapChartGraph = ({ sessionData }) => {
   }, [sessionData]);
 
   return (
-    <div className="flex justify-center m-8">
+    <div className="">
       <LineChart width={1000} height={400} data={data ? data : []}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="lapNumber">
-          <Label value="Time" offset={0} position="insideBottom" />
+          <Label value="Lap" offset={0} position="insideBottom" />
         </XAxis>
         <YAxis
           tickFormatter={(lapTimeMilli) => msToTime(lapTimeMilli)}
@@ -63,8 +63,9 @@ const LapChartGraph = ({ sessionData }) => {
           connectNulls
           type="monotone"
           dataKey="lapTimeMilli"
-          stroke="#8884d8"
+          stroke="#3f6212"
           activeDot={({ r: 8 }, { onClick: handleClick })}
+          strokeWidth={2}
         />
       </LineChart>
     </div>

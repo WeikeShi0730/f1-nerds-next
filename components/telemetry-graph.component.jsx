@@ -32,7 +32,8 @@ const TelemetryGraph = ({ telemetryData }) => {
               dot={false}
               type="monotone"
               dataKey="Speed"
-              stroke="#8884d8"
+              stroke="#3f6212"
+              strokeWidth={2}
             />
           </LineChart>
           <LineChart
@@ -50,7 +51,8 @@ const TelemetryGraph = ({ telemetryData }) => {
               dot={false}
               type="monotone"
               dataKey="RPM"
-              stroke="#8884d8"
+              stroke="#3f6212"
+              strokeWidth={2}
             />
           </LineChart>
           <LineChart
@@ -74,7 +76,8 @@ const TelemetryGraph = ({ telemetryData }) => {
               dot={false}
               type="monotone"
               dataKey="Throttle"
-              stroke="#8884d8"
+              stroke="#3f6212"
+              strokeWidth={2}
             />
             <Line
               connectNulls
@@ -82,7 +85,8 @@ const TelemetryGraph = ({ telemetryData }) => {
               dot={false}
               type="monotone"
               dataKey="Brake"
-              stroke="#82ca9d"
+              stroke="#d97706"
+              strokeWidth={2}
             />
           </LineChart>
           <LineChart
@@ -100,7 +104,8 @@ const TelemetryGraph = ({ telemetryData }) => {
               dot={false}
               type="monotone"
               dataKey="nGear"
-              stroke="#8884d8"
+              stroke="#3f6212"
+              strokeWidth={2}
             />
           </LineChart>
           <LineChart
@@ -118,7 +123,8 @@ const TelemetryGraph = ({ telemetryData }) => {
               dot={false}
               type="monotone"
               dataKey="DRS"
-              stroke="#8884d8"
+              stroke="#3f6212"
+              strokeWidth={2}
             />
           </LineChart>{" "}
         </div>

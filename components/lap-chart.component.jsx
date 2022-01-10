@@ -115,9 +115,32 @@ const LapChart = () => {
       }))
     : [{ value: null, label: "select session first..." }];
 
+  //********* custom styles for selection *********/
+  const customStyles = {
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "rgba(100, 116, 139, .1)",
+      backdropFilter: "blur(1px)",
+    }),
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: "rgba(100, 116, 139, 0)",
+    }),
+  };
+  const theme = (theme) => ({
+    ...theme,
+    colors: {
+      ...theme.colors,
+      text: "black",
+      primary50: "rgba(100, 116, 139, 0.1)",
+      primary25: "rgba(100, 116, 139, 0.2)",
+      primary: "rgba(100, 116, 139, 0.3)",
+    },
+  });
+
   return (
     <>
-      <div className="flex m-8 justify-center space-x-5">
+      <div className="flex mx-8 my-10 justify-center space-x-5">
         <Select
           instanceId="year"
           value={year}
@@ -126,6 +149,9 @@ const LapChart = () => {
           }}
           options={yearOptions}
           placeholder="year..."
+          className="w-24"
+          styles={customStyles}
+          theme={theme}
         />
         <Select
           instanceId="gp"
@@ -135,6 +161,9 @@ const LapChart = () => {
           }}
           options={gpOptions}
           placeholder="gp..."
+          className="w-64"
+          styles={customStyles}
+          theme={theme}
         />
         <Select
           instanceId="session"
@@ -144,6 +173,9 @@ const LapChart = () => {
           }}
           options={sessionOptions}
           placeholder="Session..."
+          className="w-36"
+          styles={customStyles}
+          theme={theme}
         />
         <Select
           instanceId="driver"
@@ -153,9 +185,16 @@ const LapChart = () => {
           }}
           options={driverOptions}
           placeholder="Drivers..."
+          className="w-64"
+          styles={customStyles}
+          theme={theme}
         />
       </div>
-      <LapChartGraph sessionData={sessionData} />
+      <div className="container bg-opacity-40 bg-white px-5 py-10 mx-auto my-0 rounded-3xl shadow-xl">
+        <div className="flex flex-col justify-center items-center">
+          <LapChartGraph sessionData={sessionData} />
+        </div>
+      </div>
     </>
   );
 };

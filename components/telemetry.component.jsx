@@ -45,11 +45,20 @@ const Telemetry = () => {
 
   return (
     <div className="flex flex-col justify-center items-center m-8">
-      <div>
-        {condition ? `${year.value} - ${gp.value} - ${session.value} - ${driver.value} - ${lap}` : "Select a lap to display telemetry data"}
+      <div className="">
+        {condition
+          ? `${year.value} - ${gp.value} - ${session.value} - ${driver.value} - ${lap}`
+          : "Select a lap to display telemetry data"}
       </div>
-      <div>
-      <TelemetryGraph telemetryData={telemetryData} /></div>
+      {telemetryData ? (
+        <div className="container bg-opacity-40 bg-white px-5 py-10 mx-auto my-10 rounded-3xl shadow-xl">
+          <div className="flex flex-col justify-center items-center">
+            <TelemetryGraph telemetryData={telemetryData} />
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
