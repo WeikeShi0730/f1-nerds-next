@@ -23,21 +23,24 @@ const LapChartGraph = ({ sessionData }) => {
     var secs = s % 60;
     s = (s - secs) / 60;
     var mins = s % 60;
-
     return mins + ":" + secs + "." + ms;
   };
 
   useEffect(() => {
+    let data;
     if (sessionData) {
       const keys = Object.keys(sessionData.LapNumber);
-      const data = keys.map((key) => ({
+      data = keys.map((key) => ({
         lapNumber: sessionData.LapNumber[key],
         lapTimeMilli: sessionData.LapTime[key],
         compound: sessionData.Compound[key],
       }));
-      setData(data);
+    } else {
+      setLap(null);
+      data = null;
     }
-  }, [sessionData]);
+    setData(data);
+  }, [sessionData, setLap]);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {

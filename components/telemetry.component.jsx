@@ -25,12 +25,15 @@ const Telemetry = () => {
     lap !== null;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (condition) {
+    let interval;
+    if (condition) {
+      interval = setInterval(() => {
         setTelemetryDataLoading(true);
         getData(year.value, gp.value, session.value, driver.value, lap);
-      }
-    }, 1000);
+      }, 1000);
+    } else {
+      setTelemetryData(null);
+    }
     const getData = async (year, gp, session, driver, lap) => {
       const res = await fetch(
         `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${driver}/lap/${lap}`
@@ -52,7 +55,7 @@ const Telemetry = () => {
       {telemetryDataLoading ? <Spinner /> : null}
       <div className="">
         {condition
-          ? `${year.value} - ${gp.value} - ${session.value} - ${driver.value} - ${lap}`
+          ? `${year.value} - ${gp.value} - ${session.label} - ${driver.value} - ${lap}`
           : "Select a lap to display telemetry data"}
       </div>
       {telemetryData ? (

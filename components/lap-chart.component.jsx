@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from "react";
 import dynamic from "next/dynamic";
 import Select from "react-select";
@@ -19,6 +20,8 @@ const LapChart = () => {
   const [drivers, setDrivers] = useState();
   const [sessionData, setSessionData] = useState();
 
+  // const [sessionOptions, setSessionOptions] = useState();
+
   //********* states for loading *********/
   const [gpsLoading, setGpsLoading] = useState(false);
   const [sessionsLoading, setSessionsLoading] = useState(false);
@@ -38,9 +41,19 @@ const LapChart = () => {
 
     if (year !== undefined && year !== null) {
       setGpsLoading(true);
+      // clear other sections //
+      setGp(null);
+      setRound(null);
+      setSession(null);
+      setDriver(null);
+      setGps(null);
+      setSessions(null);
+      setDrivers(null);
+      setSessionData(null);
+      // fetch new data //
       getData(year.value);
     }
-  }, [year]);
+  }, [year, setDriver, setGp, setSession]);
 
   useEffect(() => {
     const getData = async (gp, year) => {
@@ -55,9 +68,17 @@ const LapChart = () => {
 
     if (gp !== undefined && gp !== null) {
       setSessionsLoading(true);
+      // clear other sections //
+      setRound(null);
+      setSession(null);
+      setDriver(null);
+      setSessions(null);
+      setDrivers(null);
+      setSessionData(null);
+      // fetch new data //
       getData(gp.value, year.value);
     }
-  }, [gp, year]);
+  }, [gp, setDriver, setSession]);
 
   useEffect(() => {
     const getData = async (round, year) => {
@@ -75,9 +96,14 @@ const LapChart = () => {
 
     if (session !== undefined && session !== null) {
       setDriversLoading(true);
+      // clear other sections //
+      setDriver(null);
+      setDrivers(null);
+      setSessionData(null);
+      // fetch new data //
       getData(round, year.value);
     }
-  }, [session, gp, round, year]);
+  }, [session, setDriver]);
 
   useEffect(() => {
     const getData = async (year, gp, session, driver) => {
@@ -93,9 +119,13 @@ const LapChart = () => {
 
     if (driver !== undefined && driver !== null) {
       setSessionDataLoading(true);
+      // clear other sections //
+      setSessionData(null);
+      // fetch new data //
       getData(year.value, gp.value, session.value, driver.value);
     }
-  }, [session, gp, year, driver]);
+    
+  }, [driver]);
 
   //********* options for different dropdown *********/
   const yearOptions = years
