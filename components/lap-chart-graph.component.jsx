@@ -30,14 +30,27 @@ const LapChartGraph = ({ sessionData }) => {
   useEffect(() => {
     if (sessionData) {
       const keys = Object.keys(sessionData.LapNumber);
-      const temp = keys.map((key) => ({
+      const data = keys.map((key) => ({
         lapNumber: sessionData.LapNumber[key],
         lapTimeMilli: sessionData.LapTime[key],
         compound: sessionData.Compound[key],
       }));
-      setData(temp);
+      setData(data);
     }
   }, [sessionData]);
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="text-green-800 bg-slate-500 bg-opacity-20 backdrop-blur-sm p-2 rounded-md shadow-lg">
+          <p className="text-lg">{`Lap : ${label}`}</p>
+          <p>{`Lap Time: ${msToTime(payload[0].payload.lapTimeMilli)}`}</p>
+          <p>{`Compound: ${payload[0].payload.compound}`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="">
@@ -54,11 +67,7 @@ const LapChartGraph = ({ sessionData }) => {
             position: "insideLeft",
           }}
         />
-        <Tooltip
-          label="hello"
-          formatter={(value, _) => [msToTime(value), "Lap Time"]}
-          labelFormatter={(value) => "Lap " + value}
-        />
+        <Tooltip content={<CustomTooltip />} />
         <Line
           connectNulls
           type="monotone"

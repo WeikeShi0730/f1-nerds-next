@@ -9,6 +9,20 @@ import {
 } from "recharts";
 
 const TelemetryGraph = ({ telemetryData }) => {
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="text-green-800 bg-slate-500 bg-opacity-20 backdrop-blur-sm p-2 rounded-md shadow-lg">
+          <p>{`${payload[0].dataKey}: ${payload[0].value}`}</p>
+          {payload[1] ? (
+            <p className="text-amber-600">{`${payload[1].dataKey}: ${payload[1].value}`}</p>
+          ) : null}
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <>
       {telemetryData ? (
@@ -26,7 +40,7 @@ const TelemetryGraph = ({ telemetryData }) => {
                 position: "insideLeft",
               }}
             />
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
             <Line
               connectNulls
               dot={false}
@@ -45,7 +59,7 @@ const TelemetryGraph = ({ telemetryData }) => {
             <YAxis
               label={{ value: "RPM", angle: -90, position: "insideLeft" }}
             />
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
             <Line
               connectNulls
               dot={false}
@@ -68,7 +82,7 @@ const TelemetryGraph = ({ telemetryData }) => {
                 position: "insideLeft",
               }}
             />
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
             <Legend verticalAlign="top" height={36} />
             <Line
               connectNulls
@@ -98,7 +112,7 @@ const TelemetryGraph = ({ telemetryData }) => {
             <YAxis
               label={{ value: "Gear", angle: -90, position: "insideLeft" }}
             />
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
             <Line
               connectNulls
               dot={false}
@@ -117,7 +131,7 @@ const TelemetryGraph = ({ telemetryData }) => {
             <YAxis
               label={{ value: "DRS", angle: -90, position: "insideLeft" }}
             />
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
             <Line
               connectNulls
               dot={false}
