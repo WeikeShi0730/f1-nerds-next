@@ -53,9 +53,9 @@ const Telemetry = () => {
   return (
     <div className="flex flex-col justify-center items-center m-8">
       {telemetryDataLoading ? <Spinner /> : null}
-      <div className="">
+      <div className="text-xl p-1 mt-10">
         {condition
-          ? `${year.value} - ${gp.value} - ${session.label} - ${driver.value} - ${lap}`
+          ? `${year.value} - ${gp.value} - ${session.label} - ${driver.value} - Lap ${lap}`
           : "Select a lap to display telemetry data"}
       </div>
       {telemetryData ? (

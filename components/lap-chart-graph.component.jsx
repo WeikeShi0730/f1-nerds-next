@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
 import {
   LineChart,
   Label,
@@ -82,6 +83,14 @@ const LapChartGraph = ({ sessionData }) => {
       </LineChart>
     </div>
   );
+};
+
+LapChartGraph.propTypes = {
+  sessionData: PropTypes.shape({
+    LapNumber: PropTypes.objectOf(PropTypes.number),
+    LapTime: PropTypes.objectOf(PropTypes.number),
+    Compound: PropTypes.objectOf(PropTypes.string),
+  }),
 };
 
 export default LapChartGraph;

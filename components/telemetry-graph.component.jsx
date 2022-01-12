@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import {
   LineChart,
   YAxis,
@@ -147,6 +148,19 @@ const TelemetryGraph = ({ telemetryData }) => {
       )}
     </>
   );
+};
+
+TelemetryGraph.propTypes = {
+  telemetryData: PropTypes.arrayOf(
+    PropTypes.shape({
+      Brake: PropTypes.number,
+      DRS: PropTypes.number,
+      RPM: PropTypes.number,
+      Speed: PropTypes.number,
+      Throttle: PropTypes.number,
+      nGear: PropTypes.number,
+    })
+  ),
 };
 
 export default TelemetryGraph;
