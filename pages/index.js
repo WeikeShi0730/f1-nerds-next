@@ -1,5 +1,6 @@
 import React, { useState, createContext } from "react";
 import Head from "next/head";
+import BackToTop from "../components/back-to-top.component";
 import LapChart from "../components/lap-chart.component";
 import Telemetry from "../components/telemetry.component";
 
@@ -41,6 +42,7 @@ export default function Home() {
             <LapChart />
             <Telemetry />
           </SelctionsContext.Provider>
+          <BackToTop />
         </div>
       </main>
     </div>
