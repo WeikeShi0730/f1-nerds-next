@@ -29,12 +29,8 @@ const TelemetryGraph = ({ telemetryData }) => {
     <>
       {telemetryData ? (
         <div className="w-full h-full">
-          <ResponsiveContainer width="100%" aspect={2}>
-            <LineChart
-              width={1000}
-              height={400}
-              data={telemetryData ? telemetryData : []}
-            >
+          <ResponsiveContainer width="100%" aspect={3}>
+            <LineChart data={telemetryData ? telemetryData : []}>
               <CartesianGrid strokeDasharray="3 3" />
               <YAxis
                 label={{
@@ -53,6 +49,9 @@ const TelemetryGraph = ({ telemetryData }) => {
                 strokeWidth={2}
               />
             </LineChart>
+          </ResponsiveContainer>
+
+          <ResponsiveContainer width="100%" aspect={3}>
             <LineChart
               width={1000}
               height={400}
@@ -72,6 +71,9 @@ const TelemetryGraph = ({ telemetryData }) => {
                 strokeWidth={2}
               />
             </LineChart>
+          </ResponsiveContainer>
+
+          <ResponsiveContainer width="100%" aspect={3}>
             <LineChart
               width={1000}
               height={400}
@@ -106,6 +108,9 @@ const TelemetryGraph = ({ telemetryData }) => {
                 strokeWidth={2}
               />
             </LineChart>
+          </ResponsiveContainer>
+
+          <ResponsiveContainer width="100%" aspect={3}>
             <LineChart
               width={1000}
               height={400}
@@ -125,6 +130,9 @@ const TelemetryGraph = ({ telemetryData }) => {
                 strokeWidth={2}
               />
             </LineChart>
+          </ResponsiveContainer>
+
+          <ResponsiveContainer width="100%" aspect={3}>
             <LineChart
               width={1000}
               height={400}
@@ -146,7 +154,9 @@ const TelemetryGraph = ({ telemetryData }) => {
             </LineChart>
           </ResponsiveContainer>
         </div>
-      ) : null}
+      ) : (
+        ""
+      )}
     </>
   );
 };
