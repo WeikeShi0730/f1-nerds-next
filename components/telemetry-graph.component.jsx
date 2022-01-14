@@ -33,6 +33,7 @@ const TelemetryGraph = ({ telemetryData }) => {
             <LineChart data={telemetryData ? telemetryData : []}>
               <CartesianGrid strokeDasharray="3 3" />
               <YAxis
+                domain={["auto", "auto"]}
                 label={{
                   value: "Speed (km/h)",
                   angle: -90,
@@ -59,6 +60,7 @@ const TelemetryGraph = ({ telemetryData }) => {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <YAxis
+                domain={["auto", "auto"]}
                 label={{ value: "RPM", angle: -90, position: "insideLeft" }}
               />
               <Tooltip content={<CustomTooltip />} />
@@ -81,6 +83,7 @@ const TelemetryGraph = ({ telemetryData }) => {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <YAxis
+                domain={["auto", "auto"]}
                 label={{
                   value: "Throttle / Brake",
                   angle: -90,

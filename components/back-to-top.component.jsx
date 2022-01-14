@@ -26,7 +26,7 @@ const BackToTop = () => {
     <div className="fixed bottom-10 right-10 z-50 ">
       <button onClick={handleClick}>
         <div
-          className={`relative w-10 h-10 animate-bounce ${
+          className={`relative w-10 h-10 ${
             scrollPosition ? "" : "hidden"
           }`}
         >

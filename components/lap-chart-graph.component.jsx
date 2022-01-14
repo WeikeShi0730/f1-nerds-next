@@ -67,6 +67,7 @@ const LapChartGraph = ({ sessionData }) => {
           </XAxis>
           <YAxis
             tickFormatter={(lapTimeMilli) => msToTime(lapTimeMilli)}
+            domain={['auto', 'auto']}
             label={{
               value: "Time",
               angle: -90,
