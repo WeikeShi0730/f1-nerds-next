@@ -14,6 +14,7 @@ import { SelctionsContext } from "../pages/index";
 import { colors } from "../config";
 
 const TelemetryGraph = ({ telemetryData }) => {
+  console.log(telemetryData);
   const { selectedDriverLap } = useContext(SelctionsContext);
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -263,17 +264,19 @@ const TelemetryGraph = ({ telemetryData }) => {
   );
 };
 
-// TelemetryGraph.propTypes = {
-//   telemetryData: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       Brake: PropTypes.number,
-//       DRS: PropTypes.number,
-//       RPM: PropTypes.number,
-//       Speed: PropTypes.number,
-//       Throttle: PropTypes.number,
-//       nGear: PropTypes.number,
-//     })
-//   ),
-// };
+TelemetryGraph.propTypes = {
+  telemetryData: PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        Brake: PropTypes.number,
+        DRS: PropTypes.number,
+        RPM: PropTypes.number,
+        Speed: PropTypes.number,
+        Throttle: PropTypes.number,
+        nGear: PropTypes.number,
+      })
+    )
+  ),
+};
 
 export default TelemetryGraph;

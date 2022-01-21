@@ -126,12 +126,14 @@ const LapChartGraph = ({ sessionDataWithId }) => {
   );
 };
 
-// LapChartGraph.propTypes = {
-//   sessionDataWithId: PropTypes.shape({
-//     LapNumber: PropTypes.objectOf(PropTypes.number),
-//     LapTime: PropTypes.objectOf(PropTypes.number),
-//     Compound: PropTypes.objectOf(PropTypes.string),
-//   }),
-// };
+LapChartGraph.propTypes = {
+  sessionDataWithId: PropTypes.arrayOf(
+    PropTypes.shape({
+      LapNumber: PropTypes.objectOf(PropTypes.number),
+      LapTime: PropTypes.objectOf(PropTypes.number),
+      Compound: PropTypes.objectOf(PropTypes.string),
+    })
+  ),
+};
 
 export default LapChartGraph;
