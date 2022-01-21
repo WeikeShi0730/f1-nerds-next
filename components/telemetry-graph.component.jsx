@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import {
   LineChart,
@@ -10,15 +10,20 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
+import { SelctionsContext } from "../pages/index";
+import { colors } from "../config";
 
 const TelemetryGraph = ({ telemetryData }) => {
+  const { selectedDriverLap } = useContext(SelctionsContext);
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="text-green-800 bg-slate-500 bg-opacity-20 backdrop-blur-sm p-2 rounded-md shadow-lg">
+        <div
+          className={`bg-slate-500 bg-opacity-20 backdrop-blur-sm p-2 rounded-md shadow-lg`}
+        >
           {payload.map((eachPayload, index) => {
             return (
-              <div key={index}>
+              <div style={{ color: colors[index] }} key={index}>
                 <p>{`${eachPayload.dataKey}: ${eachPayload.value}`}</p>
               </div>
             );
@@ -51,17 +56,20 @@ const TelemetryGraph = ({ telemetryData }) => {
                   position: "insideLeft",
                 }}
               />
+
               <Tooltip content={<CustomTooltip />} />
+              <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
                 return (
                   <Line
+                    name={selectedDriverLap[index]}
                     key={index}
                     connectNulls
                     data={eachTelemetryData}
                     dot={false}
                     type="monotone"
                     dataKey="Speed"
-                    stroke="#3f6212"
+                    stroke={colors[index]}
                     strokeWidth={2}
                   />
                 );
@@ -83,17 +91,20 @@ const TelemetryGraph = ({ telemetryData }) => {
                 domain={["auto", "auto"]}
                 label={{ value: "RPM", angle: -90, position: "insideLeft" }}
               />
+
               <Tooltip content={<CustomTooltip />} />
+              <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
                 return (
                   <Line
+                    name={selectedDriverLap[index]}
                     key={index}
                     connectNulls
                     data={eachTelemetryData}
                     dot={false}
                     type="monotone"
                     dataKey="RPM"
-                    stroke="#3f6212"
+                    stroke={colors[index]}
                     strokeWidth={2}
                   />
                 );
@@ -124,13 +135,14 @@ const TelemetryGraph = ({ telemetryData }) => {
               {telemetryData.map((eachTelemetryData, index) => {
                 return (
                   <Line
+                    name={selectedDriverLap[index]}
                     key={index}
                     connectNulls
                     data={eachTelemetryData}
                     dot={false}
                     type="monotone"
                     dataKey="Throttle"
-                    stroke="#3f6212"
+                    stroke={colors[index]}
                     strokeWidth={2}
                   />
                 );
@@ -155,18 +167,20 @@ const TelemetryGraph = ({ telemetryData }) => {
                   position: "insideLeft",
                 }}
               />
+
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
                 return (
                   <Line
+                    name={selectedDriverLap[index]}
                     key={index}
                     connectNulls
                     data={eachTelemetryData}
                     dot={false}
                     type="monotone"
                     dataKey="Brake"
-                    stroke="#3f6212"
+                    stroke={colors[index]}
                     strokeWidth={2}
                   />
                 );
@@ -187,17 +201,20 @@ const TelemetryGraph = ({ telemetryData }) => {
               <YAxis
                 label={{ value: "Gear", angle: -90, position: "insideLeft" }}
               />
+
               <Tooltip content={<CustomTooltip />} />
+              <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
                 return (
                   <Line
+                    name={selectedDriverLap[index]}
                     key={index}
                     connectNulls
                     data={eachTelemetryData}
                     dot={false}
                     type="monotone"
                     dataKey="nGear"
-                    stroke="#3f6212"
+                    stroke={colors[index]}
                     strokeWidth={2}
                   />
                 );
@@ -218,17 +235,20 @@ const TelemetryGraph = ({ telemetryData }) => {
               <YAxis
                 label={{ value: "DRS", angle: -90, position: "insideLeft" }}
               />
+
               <Tooltip content={<CustomTooltip />} />
+              <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
                 return (
                   <Line
+                    name={selectedDriverLap[index]}
                     key={index}
                     connectNulls
                     data={eachTelemetryData}
                     dot={false}
                     type="monotone"
                     dataKey="DRS"
-                    stroke="#3f6212"
+                    stroke={colors[index]}
                     strokeWidth={2}
                   />
                 );

@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { SelctionsContext } from "../pages/index";
+import { colors } from "../config";
 
 const LapChartGraph = ({ sessionDataWithId }) => {
   const { setSelectedDriverLap, selectedDriverLap } =
@@ -62,11 +63,11 @@ const LapChartGraph = ({ sessionDataWithId }) => {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="text-green-800 bg-slate-500 bg-opacity-20 backdrop-blur-sm p-2 rounded-md shadow-lg">
+        <div className="bg-slate-500 bg-opacity-20 backdrop-blur-sm p-2 rounded-md shadow-lg">
           <p className="text-lg">{`Lap : ${label}`}</p>
           {payload.map((eachPayload, index) => {
             return (
-              <div key={index}>
+              <div style={{ color: colors[index] }} key={index}>
                 <p className="text-lg">{`${eachPayload.payload.driver}`}</p>
                 {/* for each payload */}
                 <p>{`Lap Time: ${msToTime(
@@ -74,7 +75,7 @@ const LapChartGraph = ({ sessionDataWithId }) => {
                 )}`}</p>
                 <p>{`Compound: ${eachPayload.payload.compound}`}</p>
               </div>
-            );
+            ); //[${colors[index]}]
           })}
         </div>
       );
@@ -113,7 +114,7 @@ const LapChartGraph = ({ sessionDataWithId }) => {
                 type="monotone"
                 data={eachGraphData}
                 dataKey="lapTimeMilli"
-                stroke="#3f6212"
+                stroke={colors[index]}
                 activeDot={({ r: 8 }, { onClick: handleClick })}
                 strokeWidth={2}
               />

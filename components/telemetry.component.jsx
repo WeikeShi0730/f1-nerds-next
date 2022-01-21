@@ -9,13 +9,8 @@ const TelemetryGraph = dynamic(() => import("./telemetry-graph.component"), {
 import Spinner from "./spinner.component";
 
 const Telemetry = () => {
-  const {
-    year,
-    gp,
-    session,
-    selectedDriverLap,
-    setSelectedDriverLap,
-  } = useContext(SelctionsContext);
+  const { year, gp, session, selectedDriverLap, setSelectedDriverLap } =
+    useContext(SelctionsContext);
   const [telemetryData, setTelemetryData] = useState([]);
   const [telemetryDataLoading, setTelemetryDataLoading] = useState(false);
   const [driverLap, setDriverLap] = useState([]);
@@ -34,15 +29,14 @@ const Telemetry = () => {
     let interval;
     let i = 0;
 
-    const driverLap = selectedDriverLap.map((e) => ({
-      label: `${year.value} - ${gp.value} - ${session.value} - ${
-        e.split("-")[0]
-      } - Lap ${e.split("-")[1]}`,
-      value: e,
-    }));
-    setDriverLap(driverLap);
-
     if (condition) {
+      const driverLap = selectedDriverLap.map((e) => ({
+        label: `${year.value} - ${gp.value} - ${session.value} - ${
+          e.split("-")[0]
+        } - Lap ${e.split("-")[1]}`,
+        value: e,
+      }));
+      setDriverLap(driverLap);
       setTelemetryDataLoading(true);
       interval = setInterval(async () => {
         let message = await getData(
