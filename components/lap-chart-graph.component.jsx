@@ -7,6 +7,7 @@ import {
   YAxis,
   Line,
   Tooltip,
+  Legend,
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
@@ -67,15 +68,14 @@ const LapChartGraph = ({ sessionDataWithId }) => {
           <p className="text-lg">{`Lap : ${label}`}</p>
           {payload.map((eachPayload, index) => {
             return (
-              <div style={{ color: colors[index] }} key={index}>
-                <p className="text-lg">{`${eachPayload.payload.driver}`}</p>
-                {/* for each payload */}
-                <p>{`Lap Time: ${msToTime(
-                  eachPayload.payload.lapTimeMilli
-                )}`}</p>
-                <p>{`Compound: ${eachPayload.payload.compound}`}</p>
+              <div style={{ color: eachPayload.color }} key={index}>
+                <p className="text-lg">{`${
+                  eachPayload.payload.driver
+                }: ${msToTime(eachPayload.payload.lapTimeMilli)} ${
+                  eachPayload.payload.compound
+                }`}</p>
               </div>
-            ); //[${colors[index]}]
+            );
           })}
         </div>
       );
@@ -106,9 +106,11 @@ const LapChartGraph = ({ sessionDataWithId }) => {
             }}
           />
           <Tooltip content={<CustomTooltip />} />
+          <Legend verticalAlign="top" height={36} />
           {graphData.map((eachGraphData, index) => {
             return (
               <Line
+                name={eachGraphData[0].driver}
                 key={index}
                 connectNulls
                 type="monotone"

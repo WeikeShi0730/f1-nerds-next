@@ -28,12 +28,11 @@ const Telemetry = () => {
   useEffect(() => {
     let interval;
     let i = 0;
+    let telemetryTempArray = [];
 
     if (condition) {
       const driverLap = selectedDriverLap.map((e) => ({
-        label: `${year.value} - ${gp.value} - ${session.value} - ${
-          e.split("-")[0]
-        } - Lap ${e.split("-")[1]}`,
+        label: `${session.value} - ${e.split("-")[0]} - Lap ${e.split("-")[1]}`,
         value: e,
       }));
       setDriverLap(driverLap);
@@ -48,6 +47,7 @@ const Telemetry = () => {
         if (message === true) {
           i++;
           if (i === selectedDriverLap.length) {
+            setTelemetryData(telemetryTempArray);
             clearInterval(interval);
             setTelemetryDataLoading(false);
           }
@@ -66,8 +66,7 @@ const Telemetry = () => {
       const telemetry = json;
 
       if (typeof telemetry === "object") {
-        const id = `${year} - ${gp} - ${session} - ${driver} - Lap ${lap}`;
-        setTelemetryData([...telemetryData, telemetry]);
+        telemetryTempArray.push(telemetry);
         return true;
       }
     };
@@ -123,8 +122,7 @@ const Telemetry = () => {
             isClearable={false}
             value={driverLap}
             onChange={handleOnChange}
-            // className="mx-3 my-1 w-2/3 md:w-1/3 lg:w-24"
-            className="w-96"
+            className="w-screen px-10"
             styles={customStyles}
             theme={theme}
           />

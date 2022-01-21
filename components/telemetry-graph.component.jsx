@@ -14,7 +14,6 @@ import { SelctionsContext } from "../pages/index";
 import { colors } from "../config";
 
 const TelemetryGraph = ({ telemetryData }) => {
-  console.log(telemetryData);
   const { selectedDriverLap } = useContext(SelctionsContext);
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -24,7 +23,7 @@ const TelemetryGraph = ({ telemetryData }) => {
         >
           {payload.map((eachPayload, index) => {
             return (
-              <div style={{ color: colors[index] }} key={index}>
+              <div style={{ color: eachPayload.color }} key={index}>
                 <p>{`${eachPayload.dataKey}: ${eachPayload.value}`}</p>
               </div>
             );
@@ -78,7 +77,7 @@ const TelemetryGraph = ({ telemetryData }) => {
             </LineChart>
           </ResponsiveContainer>
 
-          <ResponsiveContainer width="100%" aspect={3}>
+          <ResponsiveContainer width="100%" aspect={4}>
             <LineChart>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
@@ -113,7 +112,7 @@ const TelemetryGraph = ({ telemetryData }) => {
             </LineChart>
           </ResponsiveContainer>
 
-          <ResponsiveContainer width="100%" aspect={3}>
+          <ResponsiveContainer width="100%" aspect={5}>
             <LineChart>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
@@ -150,7 +149,7 @@ const TelemetryGraph = ({ telemetryData }) => {
               })}
             </LineChart>
           </ResponsiveContainer>
-          <ResponsiveContainer width="100%" aspect={3}>
+          <ResponsiveContainer width="100%" aspect={5}>
             <LineChart>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
@@ -223,7 +222,7 @@ const TelemetryGraph = ({ telemetryData }) => {
             </LineChart>
           </ResponsiveContainer>
 
-          <ResponsiveContainer width="100%" aspect={3}>
+          <ResponsiveContainer width="100%" aspect={5}>
             <LineChart>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
