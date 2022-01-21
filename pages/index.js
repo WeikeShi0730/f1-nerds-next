@@ -11,8 +11,6 @@ export default function Home() {
   const [gp, setGp] = useState();
   const [session, setSession] = useState();
   const [selectedDrivers, setSelectedDrivers] = useState();
-  // const [selectedDriver, setSelectedDriver] = useState([]);
-  // const [selectedLap, setSelectedLap] = useState([]);
   const [selectedDriverLap, setSelectedDriverLap] = useState([]);
   const value = {
     year,
@@ -25,10 +23,6 @@ export default function Home() {
     setSelectedDrivers,
     selectedDriverLap,
     setSelectedDriverLap,
-    // selectedDriver,
-    // setSelectedDriver,
-    // selectedLap,
-    // setSelectedLap,
   };
 
   return (
