@@ -12,11 +12,19 @@ import {
 } from "recharts";
 import { SelctionsContext } from "../pages/index";
 
-const LapChartGraph = ({ sessionData }) => {
-  const { setLap } = useContext(SelctionsContext);
-  const [data, setData] = useState();
+const LapChartGraph = ({ sessionDataWithId }) => {
+  const { setSelectedDriverLap, selectedDriverLap } =
+    useContext(SelctionsContext);
+  const [graphData, setGraphData] = useState([]);
+
   const handleClick = (_, activeIndex) => {
-    setLap(activeIndex.index + 1);
+    const id = activeIndex.payload.driver + "-" + activeIndex.payload.lapNumber;
+    if (!selectedDriverLap.some((e) => e === id)) {
+      setSelectedDriverLap((selectedDriverLap) => [
+        ...selectedDriverLap,
+        activeIndex.payload.driver + "-" + activeIndex.payload.lapNumber,
+      ]);
+    }
   };
 
   const msToTime = (s) => {
@@ -30,27 +38,44 @@ const LapChartGraph = ({ sessionData }) => {
 
   useEffect(() => {
     let data;
-    if (sessionData) {
-      const keys = Object.keys(sessionData.LapNumber);
-      data = keys.map((key) => ({
-        lapNumber: sessionData.LapNumber[key],
-        lapTimeMilli: sessionData.LapTime[key],
-        compound: sessionData.Compound[key],
-      }));
+    let tempArray = [];
+    if (sessionDataWithId) {
+      sessionDataWithId.forEach((eachData) => {
+        const { sessionData, id } = eachData;
+        const driver = id.split("-").slice(-1)[0];
+        const keys = Object.keys(sessionData.LapNumber);
+        data = keys.map((key) => ({
+          driver: driver,
+          lapNumber: sessionData.LapNumber[key],
+          lapTimeMilli: sessionData.LapTime[key],
+          compound: sessionData.Compound[key],
+        }));
+        tempArray.push(data);
+      });
+      setGraphData(tempArray);
     } else {
-      setLap(null);
-      data = null;
+      setSelectedLap([]);
+      setSelectedDriver([]);
     }
-    setData(data);
-  }, [sessionData, setLap]);
+  }, [sessionDataWithId]);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
         <div className="text-green-800 bg-slate-500 bg-opacity-20 backdrop-blur-sm p-2 rounded-md shadow-lg">
           <p className="text-lg">{`Lap : ${label}`}</p>
-          <p>{`Lap Time: ${msToTime(payload[0].payload.lapTimeMilli)}`}</p>
-          <p>{`Compound: ${payload[0].payload.compound}`}</p>
+          {payload.map((eachPayload, index) => {
+            return (
+              <div key={index}>
+                <p className="text-lg">{`${eachPayload.payload.driver}`}</p>
+                {/* for each payload */}
+                <p>{`Lap Time: ${msToTime(
+                  eachPayload.payload.lapTimeMilli
+                )}`}</p>
+                <p>{`Compound: ${eachPayload.payload.compound}`}</p>
+              </div>
+            );
+          })}
         </div>
       );
     }
@@ -60,14 +85,19 @@ const LapChartGraph = ({ sessionData }) => {
   return (
     <div className="w-full h-full">
       <ResponsiveContainer width="100%" aspect={3}>
-        <LineChart data={data ? data : []}>
+        <LineChart data={graphData}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="lapNumber">
+          <XAxis
+            allowDuplicatedCategory={false}
+            dataKey="lapNumber"
+            type="number"
+            domain={["dataMin", "dataMax"]}
+          >
             <Label value="Lap" offset={0} position="insideBottom" />
           </XAxis>
           <YAxis
             tickFormatter={(lapTimeMilli) => msToTime(lapTimeMilli)}
-            domain={['auto', 'auto']}
+            domain={["auto", "auto"]}
             label={{
               value: "Time",
               angle: -90,
@@ -75,26 +105,32 @@ const LapChartGraph = ({ sessionData }) => {
             }}
           />
           <Tooltip content={<CustomTooltip />} />
-          <Line
-            connectNulls
-            type="monotone"
-            dataKey="lapTimeMilli"
-            stroke="#3f6212"
-            activeDot={({ r: 8 }, { onClick: handleClick })}
-            strokeWidth={2}
-          />
+          {graphData.map((eachGraphData, index) => {
+            return (
+              <Line
+                key={index}
+                connectNulls
+                type="monotone"
+                data={eachGraphData}
+                dataKey="lapTimeMilli"
+                stroke="#3f6212"
+                activeDot={({ r: 8 }, { onClick: handleClick })}
+                strokeWidth={2}
+              />
+            );
+          })}
         </LineChart>
       </ResponsiveContainer>
     </div>
   );
 };
 
-LapChartGraph.propTypes = {
-  sessionData: PropTypes.shape({
-    LapNumber: PropTypes.objectOf(PropTypes.number),
-    LapTime: PropTypes.objectOf(PropTypes.number),
-    Compound: PropTypes.objectOf(PropTypes.string),
-  }),
-};
+// LapChartGraph.propTypes = {
+//   sessionDataWithId: PropTypes.shape({
+//     LapNumber: PropTypes.objectOf(PropTypes.number),
+//     LapTime: PropTypes.objectOf(PropTypes.number),
+//     Compound: PropTypes.objectOf(PropTypes.string),
+//   }),
+// };
 
 export default LapChartGraph;

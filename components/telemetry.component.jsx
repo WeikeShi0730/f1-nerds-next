@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import dynamic from "next/dynamic";
+import Select from "react-select";
 import { SelctionsContext } from "../pages/index";
 import { server } from "../config";
 const TelemetryGraph = dynamic(() => import("./telemetry-graph.component"), {
@@ -8,10 +9,16 @@ const TelemetryGraph = dynamic(() => import("./telemetry-graph.component"), {
 import Spinner from "./spinner.component";
 
 const Telemetry = () => {
-  const { year, gp, session, driver, lap } = useContext(SelctionsContext);
-  const [telemetryData, setTelemetryData] = useState(null);
+  const {
+    year,
+    gp,
+    session,
+    selectedDriverLap,
+    setSelectedDriverLap,
+  } = useContext(SelctionsContext);
+  const [telemetryData, setTelemetryData] = useState([]);
   const [telemetryDataLoading, setTelemetryDataLoading] = useState(false);
-
+  const [driverLap, setDriverLap] = useState([]);
   const condition =
     year !== undefined &&
     year !== null &&
@@ -19,46 +26,120 @@ const Telemetry = () => {
     gp !== null &&
     session !== undefined &&
     session !== null &&
-    driver !== undefined &&
-    driver !== null &&
-    lap !== undefined &&
-    lap !== null;
+    selectedDriverLap !== undefined &&
+    selectedDriverLap !== null &&
+    selectedDriverLap.length > 0;
 
   useEffect(() => {
     let interval;
+    let i = 0;
+
+    const driverLap = selectedDriverLap.map((e) => ({
+      label: `${year.value} - ${gp.value} - ${session.value} - ${
+        e.split("-")[0]
+      } - Lap ${e.split("-")[1]}`,
+      value: e,
+    }));
+    setDriverLap(driverLap);
+
     if (condition) {
-      interval = setInterval(() => {
-        setTelemetryDataLoading(true);
-        getData(year.value, gp.value, session.value, driver.value, lap);
+      setTelemetryDataLoading(true);
+      interval = setInterval(async () => {
+        let message = await getData(
+          year.value,
+          gp.value,
+          session.value,
+          selectedDriverLap[i]
+        );
+        if (message === true) {
+          i++;
+          if (i === selectedDriverLap.length) {
+            clearInterval(interval);
+            setTelemetryDataLoading(false);
+          }
+        }
       }, 1000);
     } else {
-      setTelemetryData(null);
+      setTelemetryData([]);
     }
-    const getData = async (year, gp, session, driver, lap) => {
+    const getData = async (year, gp, session, selectedDriverLap) => {
+      let driver = selectedDriverLap.split("-")[0];
+      let lap = selectedDriverLap.split("-")[1];
       const res = await fetch(
         `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${driver}/lap/${lap}`
       );
       const json = await res.json();
       const telemetry = json;
+
       if (typeof telemetry === "object") {
-        setTelemetryData(telemetry);
-        setTelemetryDataLoading(false);
-        clearInterval(interval);
+        const id = `${year} - ${gp} - ${session} - ${driver} - Lap ${lap}`;
+        setTelemetryData([...telemetryData, telemetry]);
+        return true;
       }
-      return telemetry;
     };
     return () => clearInterval(interval);
-  }, [year, gp, session, driver, lap, condition]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [year, gp, session, selectedDriverLap, condition]);
+
+  //********* custom styles for selection *********/
+  const customStyles = {
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "rgba(100, 116, 139, .1)",
+      backdropFilter: "blur(3px)",
+    }),
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: "rgba(100, 116, 139, 0)",
+    }),
+  };
+  const theme = (theme) => ({
+    ...theme,
+    colors: {
+      ...theme.colors,
+      text: "black",
+      primary50: "rgba(100, 116, 139, 0.1)",
+      primary25: "rgba(100, 116, 139, 0.2)",
+      primary: "rgba(100, 116, 139, 0.3)",
+    },
+  });
+
+  const handleOnChange = (driverLap) => {
+    setDriverLap(driverLap);
+    setTelemetryData([]);
+    const updated = driverLap
+      .map(({ label, ...value }) => value)
+      .map((e) => e.value);
+    setSelectedDriverLap(updated);
+  };
 
   return (
     <div className="flex flex-col justify-center items-center m-8">
       {telemetryDataLoading ? <Spinner /> : null}
       <div className="text-xl p-1 mt-10 text-center">
-        {condition
-          ? `${year.value} - ${gp.value} - ${session.label} - ${driver.value} - Lap ${lap}`
-          : "Select a lap to display telemetry data"}
+        {condition ? (
+          <Select
+            isMulti
+            instanceId="driverLap"
+            components={{
+              DropdownIndicator: () => null,
+              IndicatorSeparator: () => null,
+            }}
+            noOptionsMessage={() => null}
+            isClearable={false}
+            value={driverLap}
+            onChange={handleOnChange}
+            // className="mx-3 my-1 w-2/3 md:w-1/3 lg:w-24"
+            className="w-96"
+            styles={customStyles}
+            theme={theme}
+          />
+        ) : (
+          "Select a lap to display telemetry data"
+        )}
       </div>
-      {telemetryData ? (
+
+      {telemetryData && telemetryData.length > 0 ? (
         <div className="container bg-opacity-40 bg-white px-5 py-10 mx-auto my-10 rounded-3xl shadow-xl">
           <div className="flex flex-col justify-center items-center">
             <TelemetryGraph telemetryData={telemetryData} />

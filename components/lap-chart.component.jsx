@@ -10,7 +10,7 @@ import { server, years } from "../config";
 import Spinner from "./spinner.component";
 
 const LapChart = () => {
-  const { year, gp, session, driver, setYear, setGp, setSession, setDriver } =
+  const { year, gp, session, selectedDrivers, setYear, setGp, setSession, setSelectedDrivers } =
     useContext(SelctionsContext);
 
   //********* states for fetched data *********/
@@ -18,7 +18,7 @@ const LapChart = () => {
   const [gps, setGps] = useState();
   const [sessions, setSessions] = useState();
   const [drivers, setDrivers] = useState();
-  const [sessionData, setSessionData] = useState();
+  const [sessionDataWithId, setSessionDataWithId] = useState([]);
 
   // const [sessionOptions, setSessionOptions] = useState();
 
@@ -45,15 +45,15 @@ const LapChart = () => {
       setGp(null);
       setRound(null);
       setSession(null);
-      setDriver(null);
+      setSelectedDrivers(null);
       setGps(null);
       setSessions(null);
       setDrivers(null);
-      setSessionData(null);
+      setSessionDataWithId([]);
       // fetch new data //
       getData(year.value);
     }
-  }, [year, setDriver, setGp, setSession]);
+  }, [year, setSelectedDrivers, setGp, setSession]);
 
   useEffect(() => {
     const getData = async (gp, year) => {
@@ -71,14 +71,14 @@ const LapChart = () => {
       // clear other sections //
       setRound(null);
       setSession(null);
-      setDriver(null);
+      setSelectedDrivers(null);
       setSessions(null);
       setDrivers(null);
-      setSessionData(null);
+      setSessionDataWithId([]);
       // fetch new data //
       getData(gp.value, year.value);
     }
-  }, [gp, setDriver, setSession]);
+  }, [gp, setSelectedDrivers, setSession]);
 
   useEffect(() => {
     const getData = async (round, year) => {
@@ -97,35 +97,40 @@ const LapChart = () => {
     if (session !== undefined && session !== null) {
       setDriversLoading(true);
       // clear other sections //
-      setDriver(null);
+      setSelectedDrivers(null);
       setDrivers(null);
-      setSessionData(null);
+      setSessionDataWithId([]);
       // fetch new data //
       getData(round, year.value);
     }
-  }, [session, setDriver]);
+  }, [session, setSelectedDrivers]);
 
   useEffect(() => {
     const getData = async (year, gp, session, driver) => {
-      const res = await fetch(
-        `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${driver}`
-      );
-      const json = await res.json();
-
-      const sessionData = json;
-      setSessionData(sessionData);
+      let array = [];
+      for (const eachDriver of driver) {
+        const id = year + "-" + gp + "-" + session + "-" + eachDriver.value;
+        if (!array.some((e) => e.id === id)) {
+          const res = await fetch(
+            `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${eachDriver.value}`
+          );
+          const json = await res.json();
+          const sessionData = json;
+          array.push({ id, sessionData });
+        }
+      }
+      setSessionDataWithId(array);
       setSessionDataLoading(false);
     };
 
-    if (driver !== undefined && driver !== null) {
+    if (selectedDrivers !== undefined && selectedDrivers !== null) {
       setSessionDataLoading(true);
       // clear other sections //
-      setSessionData(null);
+      setSessionDataWithId([]);
       // fetch new data //
-      getData(year.value, gp.value, session.value, driver.value);
+      getData(year.value, gp.value, session.value, selectedDrivers);
     }
-    
-  }, [driver]);
+  }, [selectedDrivers]);
 
   //********* options for different dropdown *********/
   const yearOptions = years
@@ -165,7 +170,7 @@ const LapChart = () => {
     menu: (provided) => ({
       ...provided,
       backgroundColor: "rgba(100, 116, 139, .1)",
-      backdropFilter: "blur(1px)",
+      backdropFilter: "blur(3px)",
     }),
     control: (provided) => ({
       ...provided,
@@ -185,7 +190,7 @@ const LapChart = () => {
 
   return (
     <>
-      <div >{sessionDataLoading ? <Spinner /> : null}</div>
+      <div>{sessionDataLoading ? <Spinner /> : null}</div>
       <div className="flex flex-col lg:flex-row mx-8 my-10 justify-center items-center">
         <Select
           instanceId="year"
@@ -227,9 +232,10 @@ const LapChart = () => {
         />
         <Select
           instanceId="driver"
-          value={driver}
-          onChange={(driver) => {
-            setDriver(driver);
+          value={selectedDrivers}
+          isMulti
+          onChange={(selectedDrivers) => {
+            setSelectedDrivers(selectedDrivers);
           }}
           options={driverOptions}
           isLoading={driversLoading}
@@ -242,7 +248,7 @@ const LapChart = () => {
 
       <div className="container bg-opacity-40 bg-white px-5 py-10 mx-auto my-0 rounded-3xl shadow-xl">
         <div className="flex flex-col justify-center items-center">
-          <LapChartGraph sessionData={sessionData} />
+          <LapChartGraph sessionDataWithId={sessionDataWithId} />
         </div>
       </div>
     </>
