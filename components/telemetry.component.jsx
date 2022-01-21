@@ -38,36 +38,44 @@ const Telemetry = () => {
       setDriverLap(driverLap);
       setTelemetryDataLoading(true);
       interval = setInterval(async () => {
-        let message = await getData(
-          year.value,
-          gp.value,
-          session.value,
-          selectedDriverLap[i]
-        );
-        if (message === true) {
-          i++;
-          if (i === selectedDriverLap.length) {
-            setTelemetryData(telemetryTempArray);
-            clearInterval(interval);
-            setTelemetryDataLoading(false);
+        try {
+          let message = await getData(
+            year.value,
+            gp.value,
+            session.value,
+            selectedDriverLap[i]
+          );
+          if (message === true) {
+            i++;
+            if (i === selectedDriverLap.length) {
+              setTelemetryData(telemetryTempArray);
+              clearInterval(interval);
+              setTelemetryDataLoading(false);
+            }
           }
+        } catch (error) {
+          console.error(error);
         }
       }, 1000);
     } else {
       setTelemetryData([]);
     }
     const getData = async (year, gp, session, selectedDriverLap) => {
-      let driver = selectedDriverLap.split("-")[0];
-      let lap = selectedDriverLap.split("-")[1];
-      const res = await fetch(
-        `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${driver}/lap/${lap}`
-      );
-      const json = await res.json();
-      const telemetry = json;
+      try {
+        let driver = selectedDriverLap.split("-")[0];
+        let lap = selectedDriverLap.split("-")[1];
+        const res = await fetch(
+          `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${driver}/lap/${lap}`
+        );
+        const json = await res.json();
+        const telemetry = json;
 
-      if (typeof telemetry === "object") {
-        telemetryTempArray.push(telemetry);
-        return true;
+        if (typeof telemetry === "object") {
+          telemetryTempArray.push(telemetry);
+          return true;
+        }
+      } catch (error) {
+        console.error(error);
       }
     };
     return () => clearInterval(interval);

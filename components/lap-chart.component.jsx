@@ -10,8 +10,16 @@ import { server, years } from "../config";
 import Spinner from "./spinner.component";
 
 const LapChart = () => {
-  const { year, gp, session, selectedDrivers, setYear, setGp, setSession, setSelectedDrivers } =
-    useContext(SelctionsContext);
+  const {
+    year,
+    gp,
+    session,
+    selectedDrivers,
+    setYear,
+    setGp,
+    setSession,
+    setSelectedDrivers,
+  } = useContext(SelctionsContext);
 
   //********* states for fetched data *********/
   const [round, setRound] = useState();
@@ -31,12 +39,16 @@ const LapChart = () => {
   //********* api calls *********/
   useEffect(() => {
     const getData = async (year) => {
-      const res = await fetch(`https://ergast.com/api/f1/${year}.json`);
-      const json = await res.json();
-      let gps = [];
-      json.MRData.RaceTable.Races.forEach((race) => gps.push(race.raceName));
-      setGps(gps);
-      setGpsLoading(false);
+      try {
+        const res = await fetch(`https://ergast.com/api/f1/${year}.json`);
+        const json = await res.json();
+        let gps = [];
+        json.MRData.RaceTable.Races.forEach((race) => gps.push(race.raceName));
+        setGps(gps);
+        setGpsLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     if (year !== undefined && year !== null) {
@@ -57,13 +69,17 @@ const LapChart = () => {
 
   useEffect(() => {
     const getData = async (gp, year) => {
-      const res = await fetch(`${server}/api/year/${year}/weekend/${gp}`);
-      const json = await res.json();
-      const round = json.round;
-      const sessions = json.weekend_sessions;
-      setRound(round);
-      setSessions(sessions);
-      setSessionsLoading(false);
+      try {
+        const res = await fetch(`${server}/api/year/${year}/weekend/${gp}`);
+        const json = await res.json();
+        const round = json.round;
+        const sessions = json.weekend_sessions;
+        setRound(round);
+        setSessions(sessions);
+        setSessionsLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     if (gp !== undefined && gp !== null) {
@@ -82,16 +98,20 @@ const LapChart = () => {
 
   useEffect(() => {
     const getData = async (round, year) => {
-      const res = await fetch(
-        `https://ergast.com/api/f1/${year}/${round}/drivers.json`
-      );
-      const json = await res.json();
-      let drivers = [];
-      json.MRData.DriverTable.Drivers.forEach((driver) => {
-        drivers.push(driver.code);
-      });
-      setDrivers(drivers);
-      setDriversLoading(false);
+      try {
+        const res = await fetch(
+          `https://ergast.com/api/f1/${year}/${round}/drivers.json`
+        );
+        const json = await res.json();
+        let drivers = [];
+        json.MRData.DriverTable.Drivers.forEach((driver) => {
+          drivers.push(driver.code);
+        });
+        setDrivers(drivers);
+        setDriversLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     if (session !== undefined && session !== null) {
@@ -108,19 +128,23 @@ const LapChart = () => {
   useEffect(() => {
     const getData = async (year, gp, session, driver) => {
       let array = [];
-      for (const eachDriver of driver) {
-        const id = year + "-" + gp + "-" + session + "-" + eachDriver.value;
-        if (!array.some((e) => e.id === id)) {
-          const res = await fetch(
-            `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${eachDriver.value}`
-          );
-          const json = await res.json();
-          const sessionData = json;
-          array.push({ id, sessionData });
+      try {
+        for (const eachDriver of driver) {
+          const id = year + "-" + gp + "-" + session + "-" + eachDriver.value;
+          if (!array.some((e) => e.id === id)) {
+            const res = await fetch(
+              `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${eachDriver.value}`
+            );
+            const json = await res.json();
+            const sessionData = json;
+            array.push({ id, sessionData });
+          }
         }
+        setSessionDataWithId(array);
+        setSessionDataLoading(false);
+      } catch (error) {
+        console.error(error);
       }
-      setSessionDataWithId(array);
-      setSessionDataLoading(false);
     };
 
     if (selectedDrivers !== undefined && selectedDrivers !== null) {
