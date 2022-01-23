@@ -135,7 +135,7 @@ const Telemetry = () => {
             isClearable={false}
             value={driverLap}
             onChange={handleOnChange}
-            className="w-screen px-10"
+            className="w-full"
             styles={customStyles}
             theme={theme}
           />
