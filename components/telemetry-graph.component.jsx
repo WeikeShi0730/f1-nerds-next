@@ -10,7 +10,6 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
-import { SelctionsContext } from "../pages/index";
 import { colors } from "../config";
 
 const TelemetryGraph = ({ telemetryData }) => {
@@ -262,22 +261,22 @@ const TelemetryGraph = ({ telemetryData }) => {
   );
 };
 
-// TelemetryGraph.propTypes = {
-//   telemetryData: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string,
-//       telemetry: PropsType.arrayOf(
-//         PropTypes.shape({
-//           Brake: PropTypes.number,
-//           DRS: PropTypes.number,
-//           RPM: PropTypes.number,
-//           Speed: PropTypes.number,
-//           Throttle: PropTypes.number,
-//           nGear: PropTypes.number,
-//         })
-//       ),
-//     })
-//   ),
-// };
+TelemetryGraph.propTypes = {
+  telemetryData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      telemetry: PropTypes.arrayOf(
+        PropTypes.shape({
+          Brake: PropTypes.number,
+          DRS: PropTypes.number,
+          RPM: PropTypes.number,
+          Speed: PropTypes.number,
+          Throttle: PropTypes.number,
+          nGear: PropTypes.number,
+        })
+      ),
+    })
+  ),
+};
 
 export default TelemetryGraph;
