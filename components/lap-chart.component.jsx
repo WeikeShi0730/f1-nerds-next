@@ -220,7 +220,7 @@ const LapChart = () => {
             setYear(year);
           }}
           options={yearOptions}
-          placeholder="year..."
+          placeholder="Year..."
           className="mx-3 my-1 w-2/3 md:w-1/3 lg:w-24"
           styles={customStyles}
           theme={theme}
@@ -233,7 +233,7 @@ const LapChart = () => {
           }}
           options={gpOptions}
           isLoading={gpsLoading}
-          placeholder="gp..."
+          placeholder="GP..."
           className="mx-3 my-1 w-2/3 md:w-1/3 lg:w-64"
           styles={customStyles}
           theme={theme}

@@ -2,6 +2,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+### Development
+
 First, run the development server:
 
 ```bash
@@ -12,23 +14,29 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Production
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+The production code is hosted at vercel:
+[https://f1-nerds-next.vercel.app/](https://f1-nerds-next.vercel.app/)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Introduction
 
-## Learn More
+This repo is the frontend code, developed using the Next.js framework.
 
-To learn more about Next.js, take a look at the following resources:
+Data is fetched from public APIs: [ergast API](https://ergast.com/mrd/) & [FastF1](https://theoehrly.github.io/Fast-F1/legacy.html)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The second one is a library written in Python. To access data in that library, a Flask backend is created to extract and process the data. API endpoints are created in the backend code, so the frontend could make API calls to the endpoints to access data. Backend code could be found at [Backend repo](https://github.com/WeikeShi0730/f1-nerds-flask)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Usage
 
-## Deploy on Vercel
+This web app is for F1 nerds who are not satisfied with only watching the live stream, and they need some more data to have a better understanding of what's going on the track!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Now it supports all races data since 2018. So go ahead select a year, Grand Prix weekend, session, drivers, and laps of your interest.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The graphs will show drivers' session details of each lap time and tire compounds.
+
+Also, the telemetry data shows more detailed info for each lap, such as speed, RPM, throttle, brake, gear, and DRS. They will help you understand how the driver is doing in a specific lap.
+
+You can also select laps from different years, Grand Prix, sessions, and drivers to have a more comprehensive comparison between several laps.
+
+Enjoy!
