@@ -279,21 +279,3 @@ const LapChart = () => {
 };
 
 export default LapChart;
-// export const getStaticPaths = async () => {
-//   const paths = years.map((year) => ({ params: { year: year.toString() } }));
-//   return {
-//     paths,
-//     fallback: true,
-//   };
-// };
-
-// export const getStaticProps = async (context) => {
-//   const res = await fetch(`http://ergast.com/api/f1/2020.json`);
-//   console.log(res);
-//   const circuits = await res.json();
-//   return {
-//     props: {
-//       circuits,
-//     },
-//   };
-// };

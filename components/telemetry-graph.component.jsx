@@ -14,7 +14,7 @@ import { SelctionsContext } from "../pages/index";
 import { colors } from "../config";
 
 const TelemetryGraph = ({ telemetryData }) => {
-  const { selectedDriverLap } = useContext(SelctionsContext);
+  const { telemetrySelections } = useContext(SelctionsContext);
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
@@ -60,9 +60,11 @@ const TelemetryGraph = ({ telemetryData }) => {
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
+                const eachSelection = telemetrySelections[index];
+                const name = `${eachSelection.year.value}-${eachSelection.session.value}-${eachSelection.driver}-${eachSelection.lap}`;
                 return (
                   <Line
-                    name={selectedDriverLap[index]}
+                    name={name}
                     key={index}
                     connectNulls
                     data={eachTelemetryData}
@@ -95,9 +97,11 @@ const TelemetryGraph = ({ telemetryData }) => {
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
+                const eachSelection = telemetrySelections[index];
+                const name = `${eachSelection.year.value}-${eachSelection.session.value}-${eachSelection.driver}-${eachSelection.lap}`;
                 return (
                   <Line
-                    name={selectedDriverLap[index]}
+                    name={name}
                     key={index}
                     connectNulls
                     data={eachTelemetryData}
@@ -133,9 +137,11 @@ const TelemetryGraph = ({ telemetryData }) => {
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
+                const eachSelection = telemetrySelections[index];
+                const name = `${eachSelection.year.value}-${eachSelection.session.value}-${eachSelection.driver}-${eachSelection.lap}`;
                 return (
                   <Line
-                    name={selectedDriverLap[index]}
+                    name={name}
                     key={index}
                     connectNulls
                     data={eachTelemetryData}
@@ -171,9 +177,11 @@ const TelemetryGraph = ({ telemetryData }) => {
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
+                const eachSelection = telemetrySelections[index];
+                const name = `${eachSelection.year.value}-${eachSelection.session.value}-${eachSelection.driver}-${eachSelection.lap}`;
                 return (
                   <Line
-                    name={selectedDriverLap[index]}
+                    name={name}
                     key={index}
                     connectNulls
                     data={eachTelemetryData}
@@ -205,9 +213,11 @@ const TelemetryGraph = ({ telemetryData }) => {
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
+                const eachSelection = telemetrySelections[index];
+                const name = `${eachSelection.year.value}-${eachSelection.session.value}-${eachSelection.driver}-${eachSelection.lap}`;
                 return (
                   <Line
-                    name={selectedDriverLap[index]}
+                    name={name}
                     key={index}
                     connectNulls
                     data={eachTelemetryData}
@@ -239,9 +249,11 @@ const TelemetryGraph = ({ telemetryData }) => {
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
+                const eachSelection = telemetrySelections[index];
+                const name = `${eachSelection.year.value}-${eachSelection.session.value}-${eachSelection.driver}-${eachSelection.lap}`;
                 return (
                   <Line
-                    name={selectedDriverLap[index]}
+                    name={name}
                     key={index}
                     connectNulls
                     data={eachTelemetryData}
