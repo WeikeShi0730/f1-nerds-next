@@ -9,21 +9,15 @@ const TelemetryGraph = dynamic(() => import("./telemetry-graph.component"), {
 import Spinner from "./spinner.component";
 
 const Telemetry = () => {
-  const { year, gp, session, selectedDriverLap, setSelectedDriverLap } =
+  const { setTelemetrySelections, telemetrySelections } =
     useContext(SelctionsContext);
   const [telemetryData, setTelemetryData] = useState([]);
   const [telemetryDataLoading, setTelemetryDataLoading] = useState(false);
   const [driverLap, setDriverLap] = useState([]);
   const condition =
-    year !== undefined &&
-    year !== null &&
-    gp !== undefined &&
-    gp !== null &&
-    session !== undefined &&
-    session !== null &&
-    selectedDriverLap !== undefined &&
-    selectedDriverLap !== null &&
-    selectedDriverLap.length > 0;
+    telemetrySelections !== undefined &&
+    telemetrySelections !== null &&
+    telemetrySelections.length > 0;
 
   useEffect(() => {
     let interval;
@@ -31,23 +25,25 @@ const Telemetry = () => {
     let telemetryTempArray = [];
 
     if (condition) {
-      const driverLap = selectedDriverLap.map((e) => ({
-        label: `${session.value} - ${e.split("-")[0]} - Lap ${e.split("-")[1]}`,
+      const driverLap = telemetrySelections.map((e) => ({
+        label: `${e.year.label} - ${e.gp.label} - ${e.session.label} - ${e.driver} - Lap ${e.lap}`,
         value: e,
       }));
       setDriverLap(driverLap);
       setTelemetryDataLoading(true);
       interval = setInterval(async () => {
         try {
+          const { year, gp, session, driver, lap } = telemetrySelections[i];
           let message = await getData(
             year.value,
             gp.value,
             session.value,
-            selectedDriverLap[i]
+            driver,
+            lap
           );
           if (message === true) {
             i++;
-            if (i === selectedDriverLap.length) {
+            if (i === telemetrySelections.length) {
               setTelemetryData(telemetryTempArray);
               clearInterval(interval);
               setTelemetryDataLoading(false);
@@ -57,13 +53,9 @@ const Telemetry = () => {
           console.error(error);
         }
       }, 1000);
-    } else {
-      setTelemetryData([]);
     }
-    const getData = async (year, gp, session, selectedDriverLap) => {
+    const getData = async (year, gp, session, driver, lap) => {
       try {
-        let driver = selectedDriverLap.split("-")[0];
-        let lap = selectedDriverLap.split("-")[1];
         const res = await fetch(
           `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${driver}/lap/${lap}`
         );
@@ -80,7 +72,7 @@ const Telemetry = () => {
     };
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [year, gp, session, selectedDriverLap, condition]);
+  }, [telemetrySelections]);
 
   //********* custom styles for selection *********/
   const customStyles = {
@@ -111,7 +103,7 @@ const Telemetry = () => {
     const updated = driverLap
       .map(({ label, ...value }) => value)
       .map((e) => e.value);
-    setSelectedDriverLap(updated);
+    setTelemetrySelections(updated);
   };
 
   return (

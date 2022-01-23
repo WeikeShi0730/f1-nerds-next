@@ -11,7 +11,7 @@ export default function Home() {
   const [gp, setGp] = useState();
   const [session, setSession] = useState();
   const [selectedDrivers, setSelectedDrivers] = useState();
-  const [selectedDriverLap, setSelectedDriverLap] = useState([]);
+  const [telemetrySelections, setTelemetrySelections] = useState([]);
   const value = {
     year,
     setYear,
@@ -21,8 +21,8 @@ export default function Home() {
     setSession,
     selectedDrivers,
     setSelectedDrivers,
-    selectedDriverLap,
-    setSelectedDriverLap,
+    telemetrySelections,
+    setTelemetrySelections,
   };
 
   return (
@@ -48,17 +48,3 @@ export default function Home() {
     </div>
   );
 }
-
-// export async function getServerSideProps(context) {
-//   const gp_res = await fetch(`https://ergast.com/api/f1/${year}.json`);
-//   const gp_json = await gp_res.json();
-//   const gps = gp_json.MRData.RaceTable.Races.map((race) => ({
-//     race: race.raceName,
-//   }));
-
-//   return {
-//     props: {
-//       gps,
-//     },
-//   };
-// }

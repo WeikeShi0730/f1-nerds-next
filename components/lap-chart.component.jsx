@@ -31,6 +31,7 @@ const LapChart = () => {
   // const [sessionOptions, setSessionOptions] = useState();
 
   //********* states for loading *********/
+  // one loading????????
   const [gpsLoading, setGpsLoading] = useState(false);
   const [sessionsLoading, setSessionsLoading] = useState(false);
   const [driversLoading, setDriversLoading] = useState(false);
@@ -126,19 +127,16 @@ const LapChart = () => {
   }, [session, setSelectedDrivers]);
 
   useEffect(() => {
-    const getData = async (year, gp, session, driver) => {
-      // let tempArray = [];
+    const getData = async (year, gp, session, selectedDrivers) => {
       try {
-        const promises = driver.map(async (eachDriver) => {
+        const promises = selectedDrivers.map(async (eachDriver) => {
           const id = year + "-" + gp + "-" + session + "-" + eachDriver.value;
-          // if (!tempArray.some((e) => e.id === id)) {
           const res = await fetch(
             `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${eachDriver.value}`
           );
           const json = await res.json();
           const sessionData = json;
           return { id, sessionData };
-          // }
         });
         const resolvedArray = await Promise.all(promises);
         setSessionDataWithId(resolvedArray);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { isEqual } from "lodash";
 import PropTypes from "prop-types";
 import {
   LineChart,
@@ -15,16 +16,24 @@ import { SelctionsContext } from "../pages/index";
 import { colors } from "../config";
 
 const LapChartGraph = ({ sessionDataWithId }) => {
-  const { setSelectedDriverLap, selectedDriverLap } =
+  const { year, gp, session, telemetrySelections, setTelemetrySelections } =
     useContext(SelctionsContext);
   const [graphData, setGraphData] = useState([]);
 
   const handleClick = (_, activeIndex) => {
-    const id = activeIndex.payload.driver + "-" + activeIndex.payload.lapNumber;
-    if (!selectedDriverLap.some((e) => e === id)) {
-      setSelectedDriverLap((selectedDriverLap) => [
-        ...selectedDriverLap,
-        activeIndex.payload.driver + "-" + activeIndex.payload.lapNumber,
+    const driver = activeIndex.payload.driver;
+    const lap = activeIndex.payload.lapNumber;
+    const newSelection = {
+      year: year,
+      gp: gp,
+      session: session,
+      driver: driver,
+      lap: lap,
+    };
+    if (!telemetrySelections.some((e) => isEqual(e, newSelection))) {
+      setTelemetrySelections((oldtelemetrySelections) => [
+        ...oldtelemetrySelections,
+        newSelection,
       ]);
     }
   };
