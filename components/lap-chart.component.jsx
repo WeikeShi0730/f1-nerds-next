@@ -148,8 +148,6 @@ const LapChart = () => {
 
     if (selectedDrivers !== undefined && selectedDrivers !== null) {
       setSessionDataLoading(true);
-      // clear other sections //
-      setSessionDataWithId([]);
       // fetch new data //
       getData(year.value, gp.value, session.value, selectedDrivers);
     }
