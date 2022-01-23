@@ -24,7 +24,7 @@ const Telemetry = () => {
     let i = 0;
     let telemetryTempArray = [];
 
-    if (condition) {
+    if (condition && telemetrySelections.length > telemetryData.length) {
       const driverLap = telemetrySelections.map((e) => ({
         label: `${e.year.label} - ${e.gp.label} - ${e.session.label} - ${e.driver} - Lap ${e.lap}`,
         value: e,
@@ -53,9 +53,23 @@ const Telemetry = () => {
           console.error(error);
         }
       }, 1000);
+    } else if (telemetrySelections.length < telemetryData.length) {
+      const telemetrySelectionsIds = telemetrySelections.map(
+        ({ year, gp, session, driver, lap }) =>
+          `${year.value}-${gp.value}-${session.value}-${driver}-${lap}`
+      );
+      const updatedTelemetryData = telemetryData.reduce((acc, current) => {
+        if (telemetrySelectionsIds.includes(current.id)) {
+          acc.push(current);
+        }
+        return acc;
+      }, []);
+      setTelemetryData(updatedTelemetryData);
     }
+
     const getData = async (year, gp, session, driver, lap) => {
       try {
+        const id = `${year}-${gp}-${session}-${driver}-${lap}`;
         const res = await fetch(
           `${server}/api/year/${year}/weekend/${gp}/session/${session}/driver/${driver}/lap/${lap}`
         );
@@ -63,7 +77,7 @@ const Telemetry = () => {
         const telemetry = json;
 
         if (typeof telemetry === "object") {
-          telemetryTempArray.push(telemetry);
+          telemetryTempArray.push({ id, telemetry });
           return true;
         }
       } catch (error) {
@@ -99,7 +113,6 @@ const Telemetry = () => {
 
   const handleOnChange = (driverLap) => {
     setDriverLap(driverLap);
-    setTelemetryData([]);
     const updated = driverLap
       .map(({ label, ...value }) => value)
       .map((e) => e.value);

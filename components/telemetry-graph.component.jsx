@@ -14,7 +14,6 @@ import { SelctionsContext } from "../pages/index";
 import { colors } from "../config";
 
 const TelemetryGraph = ({ telemetryData }) => {
-  const { telemetrySelections } = useContext(SelctionsContext);
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
@@ -60,14 +59,12 @@ const TelemetryGraph = ({ telemetryData }) => {
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
-                const eachSelection = telemetrySelections[index];
-                const name = `${eachSelection.year.value}-${eachSelection.session.value}-${eachSelection.driver}-${eachSelection.lap}`;
                 return (
                   <Line
-                    name={name}
+                    name={eachTelemetryData.id}
                     key={index}
                     connectNulls
-                    data={eachTelemetryData}
+                    data={eachTelemetryData.telemetry}
                     dot={false}
                     type="monotone"
                     dataKey="Speed"
@@ -97,14 +94,12 @@ const TelemetryGraph = ({ telemetryData }) => {
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
-                const eachSelection = telemetrySelections[index];
-                const name = `${eachSelection.year.value}-${eachSelection.session.value}-${eachSelection.driver}-${eachSelection.lap}`;
                 return (
                   <Line
-                    name={name}
+                    name={eachTelemetryData.id}
                     key={index}
                     connectNulls
-                    data={eachTelemetryData}
+                    data={eachTelemetryData.telemetry}
                     dot={false}
                     type="monotone"
                     dataKey="RPM"
@@ -137,14 +132,12 @@ const TelemetryGraph = ({ telemetryData }) => {
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
-                const eachSelection = telemetrySelections[index];
-                const name = `${eachSelection.year.value}-${eachSelection.session.value}-${eachSelection.driver}-${eachSelection.lap}`;
                 return (
                   <Line
-                    name={name}
+                    name={eachTelemetryData.id}
                     key={index}
                     connectNulls
-                    data={eachTelemetryData}
+                    data={eachTelemetryData.telemetry}
                     dot={false}
                     type="monotone"
                     dataKey="Throttle"
@@ -177,14 +170,12 @@ const TelemetryGraph = ({ telemetryData }) => {
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
-                const eachSelection = telemetrySelections[index];
-                const name = `${eachSelection.year.value}-${eachSelection.session.value}-${eachSelection.driver}-${eachSelection.lap}`;
                 return (
                   <Line
-                    name={name}
+                    name={eachTelemetryData.id}
                     key={index}
                     connectNulls
-                    data={eachTelemetryData}
+                    data={eachTelemetryData.telemetry}
                     dot={false}
                     type="monotone"
                     dataKey="Brake"
@@ -213,14 +204,12 @@ const TelemetryGraph = ({ telemetryData }) => {
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
-                const eachSelection = telemetrySelections[index];
-                const name = `${eachSelection.year.value}-${eachSelection.session.value}-${eachSelection.driver}-${eachSelection.lap}`;
                 return (
                   <Line
-                    name={name}
+                    name={eachTelemetryData.id}
                     key={index}
                     connectNulls
-                    data={eachTelemetryData}
+                    data={eachTelemetryData.telemetry}
                     dot={false}
                     type="monotone"
                     dataKey="nGear"
@@ -249,14 +238,12 @@ const TelemetryGraph = ({ telemetryData }) => {
               <Tooltip content={<CustomTooltip />} />
               <Legend verticalAlign="top" height={36} />
               {telemetryData.map((eachTelemetryData, index) => {
-                const eachSelection = telemetrySelections[index];
-                const name = `${eachSelection.year.value}-${eachSelection.session.value}-${eachSelection.driver}-${eachSelection.lap}`;
                 return (
                   <Line
-                    name={name}
+                    name={eachTelemetryData.id}
                     key={index}
                     connectNulls
-                    data={eachTelemetryData}
+                    data={eachTelemetryData.telemetry}
                     dot={false}
                     type="monotone"
                     dataKey="DRS"
@@ -275,19 +262,22 @@ const TelemetryGraph = ({ telemetryData }) => {
   );
 };
 
-TelemetryGraph.propTypes = {
-  telemetryData: PropTypes.arrayOf(
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        Brake: PropTypes.number,
-        DRS: PropTypes.number,
-        RPM: PropTypes.number,
-        Speed: PropTypes.number,
-        Throttle: PropTypes.number,
-        nGear: PropTypes.number,
-      })
-    )
-  ),
-};
+// TelemetryGraph.propTypes = {
+//   telemetryData: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.string,
+//       telemetry: PropsType.arrayOf(
+//         PropTypes.shape({
+//           Brake: PropTypes.number,
+//           DRS: PropTypes.number,
+//           RPM: PropTypes.number,
+//           Speed: PropTypes.number,
+//           Throttle: PropTypes.number,
+//           nGear: PropTypes.number,
+//         })
+//       ),
+//     })
+//   ),
+// };
 
 export default TelemetryGraph;
