@@ -247,7 +247,7 @@ const LapChart = () => {
           options={sessionOptions}
           isLoading={sessionsLoading}
           placeholder="Session..."
-          className="mx-3 my-1 w-2/3 md:w-1/3 lg:w-36"
+          className="mx-3 my-1 w-2/3 md:w-1/3 lg:w-44"
           styles={customStyles}
           theme={theme}
         />
