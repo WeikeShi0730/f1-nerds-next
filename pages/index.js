@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import { useState, createContext } from "react";
 import Head from "next/head";
 import BackToTop from "../components/back-to-top.component";
 import Footer from "../components/footer.component";

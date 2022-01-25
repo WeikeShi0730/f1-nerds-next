@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import dynamic from "next/dynamic";
 import Select from "react-select";
 import { SelctionsContext } from "../pages/index";
