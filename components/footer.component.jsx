@@ -4,14 +4,14 @@ const Footer = () => {
   return (
     <div className="m-6 mt-12">
       <div className="text-xs md:text-sm text-center">
-        create by{" "}
+        Create by{" "}
         <a
           className="flex justify-center items-center "
           href="https://www.linkedin.com/in/weike-shi/"
           rel="noopener noreferrer"
           target="_blank"
         >
-          @ weike shi
+          @ Weike Shi
           <Image
             src="/icons8-linkedin-24.png"
             alt="linkedin"
@@ -27,7 +27,7 @@ const Footer = () => {
           rel="noopener noreferrer"
           target="_blank"
         >
-          @ github
+          @ Github
           <Image
             src="/icons8-github-24.png"
             alt="github"

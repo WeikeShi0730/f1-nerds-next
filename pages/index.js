@@ -5,7 +5,7 @@ import Footer from "../components/footer.component";
 import LapChart from "../components/lap-chart.component";
 import Telemetry from "../components/telemetry.component";
 
-export const SelctionsContext = createContext();
+export const SelectionsContext = createContext();
 
 export default function Home() {
   const [year, setYear] = useState();
@@ -39,10 +39,10 @@ export default function Home() {
           F1 Nerds
         </div>
         <div className="flex flex-col content-center">
-          <SelctionsContext.Provider value={value}>
+          <SelectionsContext.Provider value={value}>
             <LapChart />
             <Telemetry />
-          </SelctionsContext.Provider>
+          </SelectionsContext.Provider>
           <Footer />
           <BackToTop />
         </div>

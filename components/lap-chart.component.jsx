@@ -2,7 +2,7 @@
 import { useState, useEffect, useContext } from "react";
 import dynamic from "next/dynamic";
 import Select from "react-select";
-import { SelctionsContext } from "../pages/index";
+import { SelectionsContext } from "../pages/index";
 const LapChartGraph = dynamic(() => import("./lap-chart-graph.component"), {
   ssr: false,
 });
@@ -19,7 +19,7 @@ const LapChart = () => {
     setGp,
     setSession,
     setSelectedDrivers,
-  } = useContext(SelctionsContext);
+  } = useContext(SelectionsContext);
 
   //********* states for fetched data *********/
   const [round, setRound] = useState();
@@ -159,14 +159,14 @@ const LapChart = () => {
         value: year,
         label: year.toString(),
       }))
-    : [{ value: null, label: "please wait..." }];
+    : [{ value: null, label: "Please wait..." }];
 
   const gpOptions = gps
     ? gps.map((gp) => ({
         value: gp,
         label: gp,
       }))
-    : [{ value: null, label: "select year first..." }];
+    : [{ value: null, label: "Select year first..." }];
 
   const sessionOptions = sessions
     ? sessions.map((session) => {
@@ -177,14 +177,14 @@ const LapChart = () => {
           };
         }
       })
-    : [{ value: null, label: "select GP first..." }];
+    : [{ value: null, label: "Select GP first..." }];
 
   const driverOptions = drivers
     ? drivers.map((driver) => ({
         value: driver,
         label: driver,
       }))
-    : [{ value: null, label: "select session first..." }];
+    : [{ value: null, label: "Select session first..." }];
 
   //********* custom styles for selection *********/
   const customStyles = {

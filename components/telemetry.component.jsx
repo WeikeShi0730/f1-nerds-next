@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import dynamic from "next/dynamic";
 import Select from "react-select";
-import { SelctionsContext } from "../pages/index";
+import { SelectionsContext } from "../pages/index";
 import { server } from "../config";
 const TelemetryGraph = dynamic(() => import("./telemetry-graph.component"), {
   ssr: false,
@@ -10,7 +10,7 @@ import Spinner from "./spinner.component";
 
 const Telemetry = () => {
   const { setTelemetrySelections, telemetrySelections } =
-    useContext(SelctionsContext);
+    useContext(SelectionsContext);
   const [telemetryData, setTelemetryData] = useState([]);
   const [telemetryDataLoading, setTelemetryDataLoading] = useState(false);
   const [driverLap, setDriverLap] = useState([]);

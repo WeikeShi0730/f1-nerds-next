@@ -12,12 +12,12 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
-import { SelctionsContext } from "../pages/index";
+import { SelectionsContext } from "../pages/index";
 import { colors } from "../config";
 
 const LapChartGraph = ({ sessionDataWithId }) => {
   const { year, gp, session, telemetrySelections, setTelemetrySelections } =
-    useContext(SelctionsContext);
+    useContext(SelectionsContext);
   const [graphData, setGraphData] = useState([]);
 
   const handleClick = (_, activeIndex) => {
