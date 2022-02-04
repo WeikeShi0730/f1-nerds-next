@@ -95,7 +95,7 @@ const LapChartGraph = ({ sessionDataWithId }) => {
   return (
     <div className="w-full h-full">
       <ResponsiveContainer width="100%" aspect={3}>
-        <LineChart data={graphData}>
+        <LineChart>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             allowDuplicatedCategory={false}
@@ -106,6 +106,7 @@ const LapChartGraph = ({ sessionDataWithId }) => {
             <Label value="Lap" offset={0} position="insideBottom" />
           </XAxis>
           <YAxis
+            width={80}
             tickFormatter={(lapTimeMilli) => msToTime(lapTimeMilli)}
             domain={["auto", "auto"]}
             label={{

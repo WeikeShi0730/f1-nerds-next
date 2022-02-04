@@ -120,7 +120,7 @@ const Telemetry = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center m-8">
+    <div className="flex flex-col justify-center items-center mx-8">
       {telemetryDataLoading ? <Spinner /> : null}
       <div className="text-xl p-1 mt-10 text-center">
         {condition ? (
