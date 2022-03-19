@@ -190,8 +190,8 @@ const LapChart = () => {
   const customStyles = {
     menu: (provided) => ({
       ...provided,
-      backgroundColor: "rgba(100, 116, 139, .1)",
-      backdropFilter: "blur(3px)",
+      backgroundColor: "rgba(100, 116, 139, .2)",
+      backdropFilter: "blur(4px)",
     }),
     control: (provided) => ({
       ...provided,
