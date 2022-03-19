@@ -74,7 +74,7 @@ const LapChartGraph = ({ sessionDataWithId }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-slate-500 bg-opacity-20 backdrop-blur-sm p-2 rounded-md shadow-lg">
-          <p className="text-lg">{`Lap : ${label}`}</p>
+          <p className="text-lg">{`Lap: ${label}`}</p>
           {payload.map((eachPayload, index) => {
             return (
               <div style={{ color: eachPayload.color }} key={index}>

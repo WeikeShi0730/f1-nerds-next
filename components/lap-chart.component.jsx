@@ -212,7 +212,7 @@ const LapChart = () => {
   return (
     <div className="flex flex-col justify-center items-center mx-8">
       <div>{sessionDataLoading ? <Spinner /> : null}</div>
-      <div className="flex flex-col lg:flex-row mx-8 my-10 justify-center items-center">
+      <div className="flex flex-col w-full lg:flex-row mx-8 my-10 justify-center items-center">
         <Select
           instanceId="year"
           value={year}
