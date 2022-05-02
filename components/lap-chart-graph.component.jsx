@@ -19,6 +19,28 @@ const LapChartGraph = ({ sessionDataWithId }) => {
   const { year, gp, session, telemetrySelections, setTelemetrySelections } =
     useContext(SelectionsContext);
   const [graphData, setGraphData] = useState([]);
+  const [height, setHeight] = useState(100);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window) {
+        const height =
+          window.innerWidth < 1536
+            ? window.innerWidth < 1280
+              ? window.innerWidth < 1024
+                ? window.innerWidth < 768
+                  ? 300
+                  : 350
+                : 400
+              : 450
+            : 500;
+        setHeight(height);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  });
 
   const handleClick = (_, activeIndex) => {
     const driver = activeIndex.payload.driver;
@@ -94,8 +116,8 @@ const LapChartGraph = ({ sessionDataWithId }) => {
 
   return (
     <div className="w-full h-full">
-      <ResponsiveContainer width="100%" aspect={3}>
-        <LineChart>
+      <ResponsiveContainer width="100%" height={height}>
+        <LineChart margin={{ top: 5, right: 5, bottom: 15, left: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             allowDuplicatedCategory={false}
