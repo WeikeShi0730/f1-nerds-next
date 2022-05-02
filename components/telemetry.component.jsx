@@ -122,7 +122,7 @@ const Telemetry = () => {
   return (
     <div className="flex flex-col justify-center items-center mx-8">
       {telemetryDataLoading ? <Spinner /> : null}
-      <div className="text-xl p-1 mt-10 text-center">
+      <div className="text-xl p-1 mt-10 text-center w-full">
         {condition ? (
           <Select
             isMulti
@@ -135,7 +135,6 @@ const Telemetry = () => {
             isClearable={false}
             value={driverLap}
             onChange={handleOnChange}
-            className="w-min"
             styles={customStyles}
             theme={theme}
           />
