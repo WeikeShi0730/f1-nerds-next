@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   LineChart,
@@ -12,6 +13,28 @@ import {
 import { colors } from "../config";
 
 const TelemetryGraph = ({ telemetryData }) => {
+  const [height, setHeight] = useState(100);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window) {
+        const height =
+          window.innerWidth < 1536
+            ? window.innerWidth < 1280
+              ? window.innerWidth < 1024
+                ? window.innerWidth < 768
+                  ? 200
+                  : 250
+                : 300
+              : 350
+            : 400;
+        setHeight(height);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  });
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
@@ -35,8 +58,8 @@ const TelemetryGraph = ({ telemetryData }) => {
     <>
       {telemetryData && telemetryData.length > 0 ? (
         <div className="w-full h-full">
-          <ResponsiveContainer width="100%" aspect={3}>
-            <LineChart>
+          <ResponsiveContainer width="100%" height={height}>
+            <LineChart margin={{ top: 5, right: 5, bottom: 15, left: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
                 dataKey="index"
@@ -74,8 +97,8 @@ const TelemetryGraph = ({ telemetryData }) => {
             </LineChart>
           </ResponsiveContainer>
 
-          <ResponsiveContainer width="100%" aspect={4}>
-            <LineChart>
+          <ResponsiveContainer width="100%" height={height}>
+            <LineChart margin={{ top: 5, right: 5, bottom: 15, left: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
                 dataKey="index"
@@ -109,8 +132,8 @@ const TelemetryGraph = ({ telemetryData }) => {
             </LineChart>
           </ResponsiveContainer>
 
-          <ResponsiveContainer width="100%" aspect={5}>
-            <LineChart>
+          <ResponsiveContainer width="100%" height={height}>
+            <LineChart margin={{ top: 5, right: 5, bottom: 15, left: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
                 dataKey="index"
@@ -146,8 +169,8 @@ const TelemetryGraph = ({ telemetryData }) => {
               })}
             </LineChart>
           </ResponsiveContainer>
-          <ResponsiveContainer width="100%" aspect={5}>
-            <LineChart>
+          <ResponsiveContainer width="100%" height={height}>
+            <LineChart margin={{ top: 5, right: 5, bottom: 15, left: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
                 dataKey="index"
@@ -185,8 +208,8 @@ const TelemetryGraph = ({ telemetryData }) => {
             </LineChart>
           </ResponsiveContainer>
 
-          <ResponsiveContainer width="100%" aspect={3}>
-            <LineChart>
+          <ResponsiveContainer width="100%" height={height}>
+            <LineChart margin={{ top: 5, right: 5, bottom: 15, left: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
                 dataKey="index"
@@ -219,8 +242,8 @@ const TelemetryGraph = ({ telemetryData }) => {
             </LineChart>
           </ResponsiveContainer>
 
-          <ResponsiveContainer width="100%" aspect={5}>
-            <LineChart>
+          <ResponsiveContainer width="100%" height={height}>
+            <LineChart margin={{ top: 5, right: 5, bottom: 15, left: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
                 dataKey="index"
