@@ -20,7 +20,7 @@ a {
 @tailwind utilities;
 
 body {
-  background-image: url("/background.png");
+  background-image: url("/background.webp");
   background-size: cover;
   background-repeat: repeat;
   background-attachment: fixed;
