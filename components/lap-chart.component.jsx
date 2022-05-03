@@ -268,7 +268,7 @@ const LapChart = () => {
         />
       </div>
 
-      <SessionResult />
+      <SessionResult gp={gp} year={year} session={session} />
       <div className="container bg-opacity-40 bg-white px-5 py-10 mx-auto my-0 rounded-3xl shadow-xl">
         <div className="flex flex-col justify-center items-center">
           <LapChartGraph sessionDataWithId={sessionDataWithId} />
