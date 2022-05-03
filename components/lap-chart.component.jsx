@@ -2,6 +2,7 @@
 import { useState, useEffect, useContext } from "react";
 import dynamic from "next/dynamic";
 import Select from "react-select";
+import SessionResult from "./session-result.component";
 import { SelectionsContext } from "../pages/index";
 const LapChartGraph = dynamic(() => import("./lap-chart-graph.component"), {
   ssr: false,
@@ -267,6 +268,7 @@ const LapChart = () => {
         />
       </div>
 
+      <SessionResult />
       <div className="container bg-opacity-40 bg-white px-5 py-10 mx-auto my-0 rounded-3xl shadow-xl">
         <div className="flex flex-col justify-center items-center">
           <LapChartGraph sessionDataWithId={sessionDataWithId} />
