@@ -3,6 +3,7 @@ import { server } from "../config";
 
 const SessionResult = ({ gp, year, session }) => {
   const [sessionResult, setSessionResult] = useState(null);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getData = async (gp, year, session) => {
       try {
@@ -14,16 +15,18 @@ const SessionResult = ({ gp, year, session }) => {
           gp !== null &&
           session !== null
         ) {
+          setLoading(true);
           const res = await fetch(
             `${server}/api/year/${year.value}/weekend/${gp.value}/session/${session.value}`
           );
           const sessionResult = await res.json();
+          setLoading(false);
           setSessionResult(sessionResult);
         } else {
           setSessionResult(null);
         }
-        // setSessionsLoading(false);
       } catch (error) {
+        setLoading(false);
         console.error(error);
       }
     };
@@ -35,8 +38,8 @@ const SessionResult = ({ gp, year, session }) => {
     <>
       {sessionResult ? (
         <div className="w-full h-full bg-opacity-40 bg-white px-5 py-10 mx-auto mb-5 rounded-3xl shadow-xl">
-          <div className="flex justify-center">Session Result</div>
-          <div className="grid grid-cols-8 justify-items-center gap-y-10">
+          <div className="flex justify-center text-lg">Session Result</div>
+          <div className="grid grid-cols-8 justify-items-center">
             <div>Driver</div>
             <div>Fastest Lap Time</div>
             <div>Fastest Lap</div>
@@ -70,44 +73,3 @@ const SessionResult = ({ gp, year, session }) => {
 };
 
 export default SessionResult;
-
-// {
-//     "Constructor": {
-//       "constructorId": "red_bull",
-//       "name": "Red Bull",
-//       "nationality": "Austrian",
-//       "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing"
-//     },
-//     "Driver": {
-//       "code": "VER",
-//       "dateOfBirth": "1997-09-30",
-//       "driverId": "max_verstappen",
-//       "familyName": "Verstappen",
-//       "givenName": "Max",
-//       "nationality": "Dutch",
-//       "permanentNumber": "33",
-//       "url": "http://en.wikipedia.org/wiki/Max_Verstappen"
-//     },
-//     "FastestLap": {
-//       "AverageSpeed": {
-//         "speed": "220.800",
-//         "units": "kph"
-//       },
-//       "Time": {
-//         "time": "1:26.103"
-//       },
-//       "lap": "39",
-//       "rank": "1"
-//     },
-//     "Time": {
-//       "millis": "5417345",
-//       "time": "1:30:17.345"
-//     },
-//     "grid": "1",
-//     "laps": "58",
-//     "number": "33",
-//     "points": "26",
-//     "position": "1",
-//     "positionText": "1",
-//     "status": "Finished"
-//   },
