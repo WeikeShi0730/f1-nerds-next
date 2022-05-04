@@ -267,9 +267,10 @@ const LapChart = () => {
           theme={theme}
         />
       </div>
-
-      <SessionResult gp={gp} year={year} session={session} />
-      <div className="container bg-opacity-40 bg-white px-5 py-10 mx-auto my-0 rounded-3xl shadow-xl">
+      <div className="container">
+        <SessionResult gp={gp} year={year} session={session} />
+      </div>
+      <div className="container bg-opacity-40 bg-white px-5 py-10 mx-auto my-5 rounded-3xl shadow-xl">
         <div className="flex flex-col justify-center items-center">
           <LapChartGraph sessionDataWithId={sessionDataWithId} />
         </div>
