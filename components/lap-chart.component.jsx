@@ -42,6 +42,7 @@ const LapChart = () => {
   useEffect(() => {
     const getData = async (year) => {
       try {
+        setGpsLoading(true);
         const res = await fetch(`https://ergast.com/api/f1/${year}.json`);
         const json = await res.json();
         let gps = [];
@@ -49,12 +50,12 @@ const LapChart = () => {
         setGps(gps);
         setGpsLoading(false);
       } catch (error) {
+        setGpsLoading(false);
         console.error(error);
       }
     };
 
     if (year !== undefined && year !== null) {
-      setGpsLoading(true);
       // clear other sections //
       setGp(null);
       setRound(null);
@@ -72,6 +73,7 @@ const LapChart = () => {
   useEffect(() => {
     const getData = async (gp, year) => {
       try {
+        setSessionsLoading(true);
         const res = await fetch(`${server}/api/year/${year}/weekend/${gp}`);
         const json = await res.json();
         const round = json.round;
@@ -80,15 +82,16 @@ const LapChart = () => {
         setSessions(sessions);
         setSessionsLoading(false);
       } catch (error) {
+        setSessionsLoading(false);
         console.error(error);
       }
     };
 
     if (gp !== undefined && gp !== null) {
-      setSessionsLoading(true);
       // clear other sections //
-      setRound(null);
+      console.log("INNININNI");
       setSession(null);
+      setRound(null);
       setSelectedDrivers(null);
       setSessions(null);
       setDrivers(null);
@@ -101,6 +104,7 @@ const LapChart = () => {
   useEffect(() => {
     const getData = async (round, year) => {
       try {
+        setDriversLoading(true);
         const res = await fetch(
           `https://ergast.com/api/f1/${year}/${round}/drivers.json`
         );
@@ -112,12 +116,12 @@ const LapChart = () => {
         setDrivers(drivers);
         setDriversLoading(false);
       } catch (error) {
+        setDriversLoading(false);
         console.error(error);
       }
     };
 
     if (session !== undefined && session !== null) {
-      setDriversLoading(true);
       // clear other sections //
       setSelectedDrivers(null);
       setDrivers(null);
@@ -130,6 +134,7 @@ const LapChart = () => {
   useEffect(() => {
     const getData = async (year, gp, session, selectedDrivers) => {
       try {
+        setSessionDataLoading(true);
         const promises = selectedDrivers.map(async (eachDriver) => {
           const id = year + "-" + gp + "-" + session + "-" + eachDriver.value;
           const res = await fetch(
@@ -143,12 +148,12 @@ const LapChart = () => {
         setSessionDataWithId(resolvedArray);
         setSessionDataLoading(false);
       } catch (error) {
+        setSessionDataLoading(false);
         console.error(error);
       }
     };
 
     if (selectedDrivers !== undefined && selectedDrivers !== null) {
-      setSessionDataLoading(true);
       // fetch new data //
       getData(year.value, gp.value, session.value, selectedDrivers);
     }

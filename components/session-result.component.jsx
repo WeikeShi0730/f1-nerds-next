@@ -3,6 +3,7 @@ import Spinner from "./spinner.component";
 import { server } from "../config";
 
 const SessionResult = ({ gp, year, session }) => {
+  console.log(gp, year, session);
   const [sessionResult, setSessionResult] = useState(null);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -32,7 +33,6 @@ const SessionResult = ({ gp, year, session }) => {
       }
     };
 
-    // setSessionResult(null);
     getData(gp, year, session);
   }, [gp, session, year]);
   return (
