@@ -122,7 +122,7 @@ const Telemetry = () => {
   return (
     <div className="flex flex-col justify-center items-center mx-8">
       {telemetryDataLoading ? <Spinner /> : null}
-      <div className="container bg-opacity-40 bg-white px-5 py-10 mx-auto rounded-3xl shadow-xl text-xl mt-10 text-center w-full">
+      <div className="container bg-opacity-40 backdrop-blur-sm bg-white px-5 py-10 mx-auto rounded-3xl shadow-xl text-xl mt-10 text-center w-full">
         {condition ? (
           <Select
             isMulti
@@ -144,7 +144,7 @@ const Telemetry = () => {
       </div>
 
       {telemetryData && telemetryData.length > 0 ? (
-        <div className="container bg-opacity-40 bg-white px-5 py-10 mx-auto my-10 rounded-3xl shadow-xl">
+        <div className="container bg-opacity-40 backdrop-blur-sm bg-white px-5 py-10 mx-auto my-10 rounded-3xl shadow-xl">
           <div className="flex flex-col justify-center items-center">
             <TelemetryGraph telemetryData={telemetryData} />
           </div>
