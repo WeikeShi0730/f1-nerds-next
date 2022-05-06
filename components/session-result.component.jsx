@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Spinner from "./spinner.component";
 import { server } from "../config";
 
-const SessionResult = ({ gp, year, session }) => {
+const SessionResult = ({ gp, year, session, setSessionDataLoading }) => {
   const [sessionResult, setSessionResult] = useState(null);
-  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getData = async (gp, year, session) => {
       try {
@@ -16,32 +14,31 @@ const SessionResult = ({ gp, year, session }) => {
           gp !== null &&
           session !== null
         ) {
-          setLoading(true);
+          setSessionDataLoading(true);
           const res = await fetch(
             `${server}/api/year/${year.value}/weekend/${gp.value}/session/${session.value}`
           );
           const sessionResult = await res.json();
-          setLoading(false);
+          setSessionDataLoading(false);
           setSessionResult(sessionResult);
         } else {
           setSessionResult(null);
         }
       } catch (error) {
-        setLoading(false);
+        setSessionDataLoading(false);
         console.error(error);
       }
     };
 
     getData(gp, year, session);
-  }, [gp, session, year]);
+  }, [gp, session, setSessionDataLoading, year]);
   return (
-    <div className="flex w-full h-full">
-      <div>{loading ? <Spinner /> : null}</div>
+    <>
       {sessionResult ? (
         <div className="px-5 py-10 mx-auto">
           <div className="flex justify-center text-lg mb-8">Session Result</div>
           <div className="flex overflow-x-auto">
-            <div className="shrink-0">
+            <div className="shrink-0 p-2">
               <div className="grid grid-cols-8 justify-items-center">
                 <div>Position</div>
                 <div>Driver</div>
@@ -73,7 +70,7 @@ const SessionResult = ({ gp, year, session }) => {
           </div>
         </div>
       ) : null}
-    </div>
+    </>
   );
 };
 
