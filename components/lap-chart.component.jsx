@@ -56,15 +56,6 @@ const LapChart = () => {
     };
 
     if (year !== undefined && year !== null) {
-      // clear other sections //
-      setGp(null);
-      setRound(null);
-      setSession(null);
-      setSelectedDrivers(null);
-      setGps(null);
-      setSessions(null);
-      setDrivers(null);
-      setSessionDataWithId([]);
       // fetch new data //
       getData(year.value);
     }
@@ -88,14 +79,6 @@ const LapChart = () => {
     };
 
     if (gp !== undefined && gp !== null) {
-      // clear other sections //
-      console.log("INNININNI");
-      setSession(null);
-      setRound(null);
-      setSelectedDrivers(null);
-      setSessions(null);
-      setDrivers(null);
-      setSessionDataWithId([]);
       // fetch new data //
       getData(gp.value, year.value);
     }
@@ -122,10 +105,6 @@ const LapChart = () => {
     };
 
     if (session !== undefined && session !== null) {
-      // clear other sections //
-      setSelectedDrivers(null);
-      setDrivers(null);
-      setSessionDataWithId([]);
       // fetch new data //
       getData(round, year.value);
     }
@@ -223,6 +202,15 @@ const LapChart = () => {
           instanceId="year"
           value={year}
           onChange={(year) => {
+            // clear other sections //
+            setGp(null);
+            setRound(null);
+            setSession(null);
+            setSelectedDrivers(null);
+            setGps(null);
+            setSessions(null);
+            setDrivers(null);
+            setSessionDataWithId([]);
             setYear(year);
           }}
           options={yearOptions}
@@ -235,6 +223,13 @@ const LapChart = () => {
           instanceId="gp"
           value={gp}
           onChange={(gp) => {
+            // clear other sections //
+            setSession(null);
+            setRound(null);
+            setSelectedDrivers(null);
+            setSessions(null);
+            setDrivers(null);
+            setSessionDataWithId([]);
             setGp(gp);
           }}
           options={gpOptions}
@@ -248,6 +243,10 @@ const LapChart = () => {
           instanceId="session"
           value={session}
           onChange={(session) => {
+            // clear other sections //
+            setSelectedDrivers(null);
+            setDrivers(null);
+            setSessionDataWithId([]);
             setSession(session);
           }}
           options={sessionOptions}
