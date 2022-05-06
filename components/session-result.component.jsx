@@ -35,12 +35,12 @@ const SessionResult = ({ gp, year, session }) => {
     getData(gp, year, session);
   }, [gp, session, year]);
   return (
-    <div className="flex w-full h-full overflow-x-auto">
+    <div className="flex w-full h-full">
       <div>{loading ? <Spinner /> : null}</div>
       {sessionResult ? (
         <div className="px-5 py-10 mx-auto">
           <div className="flex justify-center text-lg mb-8">Session Result</div>
-          <div className="flex ">
+          <div className="flex overflow-x-auto">
             <div className="shrink-0">
               <div className="grid grid-cols-8 justify-items-center">
                 <div>Position</div>
