@@ -144,7 +144,7 @@ const Telemetry = () => {
       </div>
 
       {telemetryData && telemetryData.length > 0 ? (
-        <div className="container bg-opacity-40 backdrop-blur-sm bg-white px-5 py-10 mx-auto my-10 rounded-3xl shadow-xl">
+        <div className="container -z-10 bg-opacity-40 backdrop-blur-sm bg-white px-5 py-10 mx-auto my-10 rounded-3xl shadow-xl">
           <div className="flex flex-col justify-center items-center">
             <TelemetryGraph telemetryData={telemetryData} />
           </div>

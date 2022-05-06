@@ -3,7 +3,6 @@ import Spinner from "./spinner.component";
 import { server } from "../config";
 
 const SessionResult = ({ gp, year, session }) => {
-  console.log(gp, year, session);
   const [sessionResult, setSessionResult] = useState(null);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -37,7 +36,7 @@ const SessionResult = ({ gp, year, session }) => {
   }, [gp, session, year]);
   return (
     <>
-      <div>{loading ? <Spinner /> : null}</div>
+      <div>{!loading ? <Spinner /> : null}</div>
       {sessionResult ? (
         <div className="w-full h-full px-5 py-10 mx-auto mb-5">
           <div className="flex justify-center text-lg">Session Result</div>
