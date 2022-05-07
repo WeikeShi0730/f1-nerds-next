@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { server } from "../config";
+import { SelectionsContext } from "../pages/index";
 
-const SessionResult = ({ gp, year, session, setSessionDataLoading }) => {
+const SessionResult = ({ setSessionDataLoading }) => {
+  const { year, gp, session } = useContext(SelectionsContext);
   const [sessionResult, setSessionResult] = useState(null);
   useEffect(() => {
     const getData = async (gp, year, session) => {
