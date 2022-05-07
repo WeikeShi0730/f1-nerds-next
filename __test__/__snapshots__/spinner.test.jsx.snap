@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Spinner /> shows content in <Spinner /> 1`] = `
+<body>
+  <div>
+    <div
+      class="fixed z-50 left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2"
+    >
+      <div
+        class="relative animate-spin h-24 w-24"
+      >
+        <span
+          style="box-sizing: border-box; display: block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"
+        >
+          <img
+            alt="yellow tire"
+            data-nimg="fill"
+            decoding="async"
+            sizes="100vw"
+            src="/_next/image?url=%2FtireYellow.png&w=3840&q=75"
+            srcset="/_next/image?url=%2FtireYellow.png&w=640&q=75 640w, /_next/image?url=%2FtireYellow.png&w=750&q=75 750w, /_next/image?url=%2FtireYellow.png&w=828&q=75 828w, /_next/image?url=%2FtireYellow.png&w=1080&q=75 1080w, /_next/image?url=%2FtireYellow.png&w=1200&q=75 1200w, /_next/image?url=%2FtireYellow.png&w=1920&q=75 1920w, /_next/image?url=%2FtireYellow.png&w=2048&q=75 2048w, /_next/image?url=%2FtireYellow.png&w=3840&q=75 3840w"
+            style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+          />
+          <noscript />
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+`;

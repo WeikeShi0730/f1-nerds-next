@@ -1,12 +1,12 @@
 import { render } from "@testing-library/react";
-import BackToTop from "../components/back-to-top.component";
+import Spinner from "../components/spinner.component";
 
 let documentBody;
-describe("<BackToTop />", () => {
+describe("<Spinner />", () => {
   beforeEach(() => {
-    documentBody = render(<BackToTop />);
+    documentBody = render(<Spinner />);
   });
-  it("shows content in <BackToTop />", () => {
+  it("shows content in <Spinner />", () => {
     const { baseElement } = documentBody;
     expect(baseElement).toMatchSnapshot();
   });
