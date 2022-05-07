@@ -32,7 +32,6 @@ const LapChart = () => {
   // const [sessionOptions, setSessionOptions] = useState();
 
   //********* states for loading *********/
-  // one loading????????
   const [gpsLoading, setGpsLoading] = useState(false);
   const [sessionsLoading, setSessionsLoading] = useState(false);
   const [driversLoading, setDriversLoading] = useState(false);
