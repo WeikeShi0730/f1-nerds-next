@@ -39,7 +39,7 @@ const SessionResult = ({ setSessionDataLoading }) => {
       {sessionResult ? (
         <div className="px-5 py-10 mx-auto">
           <div className="flex justify-center text-lg mb-8">Session Result</div>
-          <div className="flex overflow-x-auto">
+          <div className="flex justify-center items-center overflow-x-auto">
             <div className="shrink-0 p-2">
               <div className="grid grid-cols-8 justify-items-center">
                 <div>Position</div>
