@@ -41,31 +41,33 @@ const SessionResult = ({ setSessionDataLoading }) => {
           <div className="flex justify-center text-lg mb-8">Session Result</div>
           <div className="flex justify-center items-center overflow-x-auto">
             <div className="shrink-0 p-2">
-              <div className="grid grid-cols-6 justify-items-center">
+              <div className="grid gap-x-8 grid-cols-8 justify-items-start">
                 <div>Position</div>
+                <div>Number</div>
                 <div>Driver</div>
                 <div>Team</div>
                 <div>Grid</div>
                 <div>Points</div>
+                <div>Fastest Lap</div>
                 <div>Status</div>
               </div>
-              {Object.keys(sessionResult.DriverNumber).map(
-                (eachDriver) => {
-                  return (
-                    <div
-                      key={eachDriver}
-                      className="grid grid-cols-6 justify-items-center"
-                    >
-                      <div>{sessionResult.Position[eachDriver]} </div>
-                      <div>{sessionResult.BroadcastName[eachDriver]} </div>
-                      <div>{sessionResult.TeamName[eachDriver]} </div>
-                      <div>{sessionResult.GridPosition[eachDriver]} </div>
-                      <div>{sessionResult.Points[eachDriver]} </div>
-                      <div>{sessionResult.Status[eachDriver]} </div>
-                    </div>
-                  );
-                }
-              )}
+              {sessionResult.sortedDriverPositionNumber.map((eachDriver) => {
+                return (
+                  <div
+                    key={eachDriver}
+                    className="grid gap-x-8 grid-cols-8 justify-items-start"
+                  >
+                    <div>{sessionResult.Position[eachDriver]} </div>
+                    <div>{eachDriver}</div>
+                    <div>{sessionResult.BroadcastName[eachDriver]} </div>
+                    <div>{sessionResult.TeamName[eachDriver]} </div>
+                    <div>{sessionResult.GridPosition[eachDriver]} </div>
+                    <div>{sessionResult.Points[eachDriver]} </div>
+                    <div>{sessionResult.FastestLap[eachDriver]} </div>
+                    <div>{sessionResult.Status[eachDriver]} </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
