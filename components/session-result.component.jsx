@@ -83,7 +83,13 @@ const SessionResult = ({ setSessionDataLoading }) => {
                         </>
                       )}
                     </div>
-                    <div>{sessionResult.FastestLap[eachDriver]} </div>
+                    {sessionResult.FastestLapDriver === eachDriver ? (
+                      <div>
+                        {sessionResult.FastestLap[eachDriver]} <span className="text-purple-600">●</span>
+                      </div>
+                    ) : (
+                      <div>{sessionResult.FastestLap[eachDriver]} </div>
+                    )}
                     <div>{sessionResult.Status[eachDriver]} </div>
                     <div>{sessionResult.Points[eachDriver]} </div>
                   </div>
