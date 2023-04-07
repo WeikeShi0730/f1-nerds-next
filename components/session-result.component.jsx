@@ -41,30 +41,51 @@ const SessionResult = ({ setSessionDataLoading }) => {
           <div className="flex justify-center text-lg mb-8">Session Result</div>
           <div className="flex justify-center items-center overflow-x-auto">
             <div className="shrink-0 p-2">
-              <div className="grid gap-x-8 grid-cols-8 justify-items-start">
+              <div className="grid gap-x-8 grid-cols-9 justify-items-start">
+                {/* Change gap */}
                 <div>Position</div>
                 <div>Number</div>
                 <div>Driver</div>
                 <div>Team</div>
-                <div>Grid</div>
-                <div>Points</div>
+                <div>Starting Grid</div>
+                <div>Grid Delta</div>
                 <div>Fastest Lap</div>
                 <div>Status</div>
+                <div>Points</div>
               </div>
+              <br />
               {sessionResult.sortedDriverPositionNumber.map((eachDriver) => {
                 return (
                   <div
                     key={eachDriver}
-                    className="grid gap-x-8 grid-cols-8 justify-items-start"
+                    className="grid gap-x-8 grid-cols-9 justify-items-start"
                   >
                     <div>{sessionResult.Position[eachDriver]} </div>
                     <div>{eachDriver}</div>
                     <div>{sessionResult.BroadcastName[eachDriver]} </div>
                     <div>{sessionResult.TeamName[eachDriver]} </div>
                     <div>{sessionResult.GridPosition[eachDriver]} </div>
-                    <div>{sessionResult.Points[eachDriver]} </div>
+                    <div className="flex gap-x-2">
+                      {sessionResult.GridDelta[eachDriver] > 0 ? (
+                        <>
+                          <div className="text-green-600">↾</div>
+                          <div>+{sessionResult.GridDelta[eachDriver]} </div>
+                        </>
+                      ) : sessionResult.GridDelta[eachDriver] < 0 ? (
+                        <>
+                          <div className="text-red-600">⇂</div>
+                          <div>{sessionResult.GridDelta[eachDriver]} </div>
+                        </>
+                      ) : (
+                        <>
+                          <div>‒</div>
+                          <div>{sessionResult.GridDelta[eachDriver]} </div>
+                        </>
+                      )}
+                    </div>
                     <div>{sessionResult.FastestLap[eachDriver]} </div>
                     <div>{sessionResult.Status[eachDriver]} </div>
+                    <div>{sessionResult.Points[eachDriver]} </div>
                   </div>
                 );
               })}
