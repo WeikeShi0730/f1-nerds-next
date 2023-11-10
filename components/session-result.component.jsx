@@ -66,26 +66,31 @@ const SessionResult = ({ setSessionDataLoading }) => {
                     <div>{sessionResult.TeamName[eachDriver]} </div>
                     <div>{sessionResult.GridPosition[eachDriver]} </div>
                     <div className="flex gap-x-2">
-                      {sessionResult.GridDelta[eachDriver] > 0 ? (
-                        <>
-                          <div className="text-green-600">↾</div>
-                          <div>+{sessionResult.GridDelta[eachDriver]} </div>
-                        </>
-                      ) : sessionResult.GridDelta[eachDriver] < 0 ? (
-                        <>
-                          <div className="text-red-600">⇂</div>
-                          <div>{sessionResult.GridDelta[eachDriver]} </div>
-                        </>
+                      {sessionResult.GridDelta[eachDriver] !== "N/A" ? (
+                        sessionResult.GridDelta[eachDriver] > 0 ? (
+                          <>
+                            <div className="text-green-600">↾</div>
+                            <div>+{sessionResult.GridDelta[eachDriver]} </div>
+                          </>
+                        ) : sessionResult.GridDelta[eachDriver] < 0 ? (
+                          <>
+                            <div className="text-red-600">⇂</div>
+                            <div>{sessionResult.GridDelta[eachDriver]} </div>
+                          </>
+                        ) : (
+                          <>
+                            <div>‒</div>
+                            <div>{sessionResult.GridDelta[eachDriver]} </div>
+                          </>
+                        )
                       ) : (
-                        <>
-                          <div>‒</div>
-                          <div>{sessionResult.GridDelta[eachDriver]} </div>
-                        </>
+                        <div>{sessionResult.GridDelta[eachDriver]}</div>
                       )}
                     </div>
                     {sessionResult.FastestLapDriver === eachDriver ? (
                       <div>
-                        {sessionResult.FastestLap[eachDriver]} <span className="text-purple-600">●</span>
+                        {sessionResult.FastestLap[eachDriver]}{" "}
+                        <span className="text-purple-600">●</span>
                       </div>
                     ) : (
                       <div>{sessionResult.FastestLap[eachDriver]} </div>
